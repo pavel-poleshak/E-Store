@@ -6,8 +6,15 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "E-Store.Domain", "E-Store.Domain\E-Store.Domain.csproj", "{ED3E06EB-FCD0-42A5-BE03-F0E3ECE52D7B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "E-Store.WebUI", "E-Store.WebUI\E-Store.WebUI.csproj", "{867DE7DE-0C17-4B56-A36F-83C9233E0530}"
+	ProjectSection(ProjectDependencies) = postProject
+		{ED3E06EB-FCD0-42A5-BE03-F0E3ECE52D7B} = {ED3E06EB-FCD0-42A5-BE03-F0E3ECE52D7B}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "E-Store.UnitTests", "E-Store.UnitTests\E-Store.UnitTests.csproj", "{2BFE6037-4D52-4C66-8C80-B32E8C48F1C4}"
+	ProjectSection(ProjectDependencies) = postProject
+		{867DE7DE-0C17-4B56-A36F-83C9233E0530} = {867DE7DE-0C17-4B56-A36F-83C9233E0530}
+		{ED3E06EB-FCD0-42A5-BE03-F0E3ECE52D7B} = {ED3E06EB-FCD0-42A5-BE03-F0E3ECE52D7B}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
