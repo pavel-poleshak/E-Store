@@ -16,9 +16,9 @@ namespace E_Store.WebUI.Controllers
             repository = productRepository;
         }
         // GET: Product
-        public ActionResult Index()
+        public ActionResult List()
         {
-            return View();
+            return View(repository.Products);
         }
     }
 }
