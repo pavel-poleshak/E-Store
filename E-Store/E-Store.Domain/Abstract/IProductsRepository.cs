@@ -7,7 +7,7 @@ using E_Store.Domain.Entities;
 
 namespace E_Store.Domain.Abstract
 {
-    interface IProductsRepository
+   public interface IProductsRepository
     {
         IEnumerable<Product> Products { get; }
     }
