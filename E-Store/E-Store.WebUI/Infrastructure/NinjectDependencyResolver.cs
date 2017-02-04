@@ -6,6 +6,7 @@ using Ninject;
 using Moq;
 using E_Store.Domain.Abstract;
 using E_Store.Domain.Entities;
+using E_Store.Domain.Concrete;
 
 namespace E_Store.WebUI.Infrastructure
 {
@@ -36,7 +37,7 @@ namespace E_Store.WebUI.Infrastructure
                 new Product() {Name = "Running Shoes", Price = 500 }
 
             });
-            kernel.Bind<IProductsRepository>().ToConstant(mock.Object);
+            kernel.Bind<IProductsRepository>().To<EFProductRepository>();
         }
     }
 }
