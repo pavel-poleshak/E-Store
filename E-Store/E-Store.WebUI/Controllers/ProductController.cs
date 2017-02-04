@@ -11,7 +11,7 @@ namespace E_Store.WebUI.Controllers
     public class ProductController : Controller
     {
         private IProductsRepository repository;
-        private int pageSize = 4;
+        public int PageSize { get; set; }
         public ProductController(IProductsRepository productRepository)
         {
             repository = productRepository;
@@ -19,10 +19,11 @@ namespace E_Store.WebUI.Controllers
         // GET: Product
         public ActionResult List(int page = 1)
         {
+            PageSize = 4;
             return View(repository.Products
                 .OrderBy(p => p.ProductId)
-                .Skip((page - 1) * pageSize)
-                .Take(pageSize));
+                .Skip((page - 1) * PageSize)
+                .Take(PageSize));
         }
     }
 }
