@@ -1,8 +1,20 @@
-﻿@model E_Store.Domain.Entities.Product
+﻿@using E_Store.Domain.Entities
+@model IEnumerable<Product>
+
 
 @{
     ViewBag.Title = "List";
 }
 
 <h2>List</h2>
+@foreach (var p in Model)
+{
+    <div>
+        <h2>@p.Name</h2>
+        <p>@p.Description</p>
+        <h3>@p.Price.ToString()</h3>
+
+    </div>
+}
+
 
