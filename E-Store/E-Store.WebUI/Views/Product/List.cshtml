@@ -10,9 +10,13 @@
 <h2>List</h2>
 @foreach (var item in Model.Products)
 {
-    <h2>@item.Name</h2>
-    <p>@item.Description</p>
-    <h3>@item.Price.ToString()</h3>
+    <div class="well">
+        <h3>
+            <strong>@item.Name</strong>
+            <span class="pull-right label label-primary">@item.Price.ToString("# BYN")</span>
+        </h3>
+        <span class="lead">@item.Description</span>
+    </div>
 }
 <div>
     @Html.PageLinks(Model.PagingInfo, x=>Url.Action("List", new { page=x}))   
