@@ -15,8 +15,8 @@ namespace E_Store.WebUI
 
             routes.MapRoute(
                 name: null,
-                url: "Page{page}",
-                defaults: new { controller= "Product", action = "List" }
+                url: "Page/{page}",
+                defaults: new { controller = "Product", action = "List" }
                 );
 
             routes.MapRoute(
