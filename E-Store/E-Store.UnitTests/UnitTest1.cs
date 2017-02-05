@@ -1,6 +1,8 @@
 ﻿using E_Store.Domain.Abstract;
 using E_Store.Domain.Entities;
 using E_Store.WebUI.Controllers;
+using E_Store.WebUI.HtmlHelpers;
+using E_Store.WebUI.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using System;
@@ -40,9 +42,29 @@ namespace E_Store.UnitTests
             List<Product> products = result.ToList();
             Assert.IsTrue(products.Count == 3);
             Assert.AreEqual(products[0].Name, "P4");
-            Assert.AreEqual(products[1].Name, "P5");          
-            
-           
+            Assert.AreEqual(products[1].Name, "P5"); 
+        }
+        [TestMethod]
+        public void Can_Generate_Page_Links()
+        {
+            //arrange
+            HtmlHelper myHelper = null;
+            PagingInfo pagingInfo = new PagingInfo
+            {
+                CurrentPage = 2,
+                TotalItems = 28,
+                ItemsPerPage = 10
+            };
+            Func<int, string> pageUrlDelegate = i => "Page" + i;
+
+            //act
+            MvcHtmlString result = myHelper.PageLinks(pagingInfo, pageUrlDelegate);
+
+            //assert
+            Assert.AreEqual(@"<a class=""btn btn-default"" href=""Page1"">1</a>"
+                + @"<a class=""btn btn-default btn-primary selected"" href=""Page2"">2</a>"
+                + @"<a class=""btn btn-default"" href=""Page3"">3</a>",
+                result.ToString());
         }
     }
 }
