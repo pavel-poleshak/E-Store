@@ -35,11 +35,11 @@ namespace E_Store.UnitTests
             controller.pageSize = 3;
 
             //act
-            IEnumerable<Product> result = (IEnumerable<Product>)controller.List(2).Model;
+            ProductListViewModel result = (ProductListViewModel)controller.List(2).Model;
 
             //assert
 
-            List<Product> products = result.ToList();
+            List<Product> products = result.Products.ToList();
             Assert.IsTrue(products.Count == 3);
             Assert.AreEqual(products[0].Name, "P4");
             Assert.AreEqual(products[1].Name, "P5"); 
