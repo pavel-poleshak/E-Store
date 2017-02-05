@@ -66,5 +66,37 @@ namespace E_Store.UnitTests
                 + @"<a class=""btn btn-default"" href=""Page3"">3</a>",
                 result.ToString());
         }
+
+        [TestMethod]
+        public void Can_Send_Pagination_View_Model()
+        {
+            //arrange
+            Mock<IProductsRepository> mock = new Mock<IProductsRepository>();
+            mock.Setup(m => m.Products).Returns(new List<Product>()
+            {
+                new Product() {ProductId=1,Name="Screen" },
+                new Product() {ProductId=2, Name="Mouse" },
+                new Product() {ProductId=3,Name="keyboard" },
+                new Product() {ProductId=4, Name="TouchPad" },
+                new Product() {ProductId=5,Name="Cable" }
+            });
+
+            ProductController controller = new ProductController(mock.Object);
+            controller.pageSize = 3;
+
+            //act
+            ProductListViewModel result = (ProductListViewModel)controller.List(2).Model;
+            PagingInfo pagingInfo = result.PagingInfo;
+
+
+            //assert
+            Assert.AreEqual(pagingInfo.CurrentPage, 2);
+            Assert.AreEqual(pagingInfo.ItemsPerPage, 3);
+            Assert.AreEqual(pagingInfo.TotalItems, 5);
+            Assert.AreEqual(pagingInfo.TotalPages, 2);
+
+
+        }
+
     }
 }
