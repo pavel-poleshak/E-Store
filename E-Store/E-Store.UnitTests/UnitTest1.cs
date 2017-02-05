@@ -30,7 +30,7 @@ namespace E_Store.UnitTests
 
             });
             ProductController controller = new ProductController(mock.Object);
-            controller.PageSize = 3;
+            controller.pageSize = 3;
 
             //act
             IEnumerable<Product> result = (IEnumerable<Product>)controller.List(2).Model;
