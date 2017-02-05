@@ -17,7 +17,7 @@ namespace E_Store.WebUI.Controllers
             repository = productRepository;
         }
         // GET: Product
-        public ActionResult List(int page = 1)
+        public ViewResult List(int page = 1)
         {
             PageSize = 4;
             return View(repository.Products

@@ -1,10 +1,12 @@
-﻿using System;
+﻿using E_Store.Domain.Abstract;
+using E_Store.Domain.Entities;
+using E_Store.WebUI.Controllers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
-using E_Store.Domain.Abstract;
-using E_Store.Domain.Entities;
+using System;
 using System.Collections.Generic;
-using E_Store.WebUI.Controllers;
+using System.Linq;
+using System.Web.Mvc;
 
 namespace E_Store.UnitTests
 {
@@ -14,6 +16,7 @@ namespace E_Store.UnitTests
         [TestMethod]
         public void Can_Paginate()
         {
+            //arrange
             Mock<IProductsRepository> mock = new Mock<IProductsRepository>();
             mock.Setup(m => m.Products).Returns(new List<Product>()
             {
@@ -27,7 +30,19 @@ namespace E_Store.UnitTests
 
             });
             ProductController controller = new ProductController(mock.Object);
+            controller.PageSize = 3;
+
+            //act
+            IEnumerable<Product> result = (IEnumerable<Product>)controller.List(2).Model;
+
+            //assert
+
+            List<Product> products = result.ToList();
+            Assert.IsTrue(products.Count == 3);
+            Assert.AreEqual(products[0].Name, "P4");
+            Assert.AreEqual(products[1].Name, "P5");          
             
+           
         }
     }
 }
