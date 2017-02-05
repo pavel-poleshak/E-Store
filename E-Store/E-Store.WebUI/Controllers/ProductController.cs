@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using E_Store.Domain.Abstract;
 using E_Store.Domain.Entities;
+using E_Store.WebUI.Models;
 
 namespace E_Store.WebUI.Controllers
 {
@@ -22,11 +23,20 @@ namespace E_Store.WebUI.Controllers
         // GET: Product
         public ViewResult List(int page = 1)
         {
-           
-            return View(repository.Products
+            ProductListViewModel model = new ProductListViewModel()
+            {
+                Products = repository.Products
                 .OrderBy(p => p.ProductId)
                 .Skip((page - 1) * pageSize)
-                .Take(pageSize));
+                .Take(pageSize),
+                PagingInfo = new PagingInfo()
+                {
+                    CurrentPage = page,
+                    ItemsPerPage = pageSize,
+                    TotalItems = repository.Products.Count()
+                }
+            };
+            return View(model);
         }
     }
 }
