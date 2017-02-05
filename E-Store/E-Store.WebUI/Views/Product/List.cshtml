@@ -1,20 +1,18 @@
-﻿@using E_Store.Domain.Entities
-@model IEnumerable<Product>
+﻿@using E_Store.WebUI.Models
+@model ProductListViewModel
 
 
 @{
-    ViewBag.Title = "List";
+    ViewBag.Title = "Товары";
 }
 
 <h2>List</h2>
-@foreach (var p in Model)
+@foreach (var item in Model.Products)
 {
-    <div>
-        <h2>@p.Name</h2>
-        <p>@p.Description</p>
-        <h3>@p.Price.ToString()</h3>
-
-    </div>
+    <h2>@item.Name</h2>
+    <p>@item.Description</p>
+    <h3>@item.Price.ToString("$")</h3>
 }
+
 
 
