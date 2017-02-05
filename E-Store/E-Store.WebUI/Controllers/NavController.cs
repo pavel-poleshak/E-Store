@@ -19,6 +19,7 @@ namespace E_Store.WebUI.Controllers
         {
             IEnumerable<string> categories = repository.Products
                 .Select(p => p.Category)
+                .Where(p=>p!=null && p!="")
                 .Distinct()
                 .OrderBy(x => x);
             return PartialView(categories);
