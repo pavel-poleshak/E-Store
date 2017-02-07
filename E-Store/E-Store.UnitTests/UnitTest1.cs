@@ -98,5 +98,37 @@ namespace E_Store.UnitTests
 
         }
 
+        [TestMethod]
+        public void Can_Create_Categories()
+        {
+            //arrange
+            Mock<IProductsRepository> mock = new Mock<IProductsRepository>();
+            mock.Setup(m => m.Products).Returns(new List<Product>
+            {
+                new Product() {ProductId=1, Category="Motherboards" },
+                new Product() {ProductId=2, Category="Videocards" },
+                new Product() {ProductId=3, Category="Splitters" },
+                new Product() {ProductId=4, Category=null },
+                new Product() {ProductId=5, Category="Videocards" },
+                new Product() {ProductId=6, Category="" },
+                new Product() {ProductId=7 }
+
+            });
+
+            NavController controller = new NavController(mock.Object);
+
+            //act          
+            List<string> categories = ((IEnumerable<string>)controller.Menu().Model).ToList();
+
+            //assert
+
+            Assert.AreEqual(categories.Count, 3);
+            Assert.AreEqual(categories[0], "Motherboards");
+            Assert.AreEqual(categories[1], "Splitters");
+           
+
+
+        }
+
     }
 }
