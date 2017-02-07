@@ -15,6 +15,7 @@ namespace E_Store.WebUI.Controllers
             repository = repo;
         }
         // GET: Nav
+        [ChildActionOnly]
         public PartialViewResult Menu()
         {
             IEnumerable<string> categories = repository.Products

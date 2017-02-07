@@ -35,7 +35,7 @@ namespace E_Store.UnitTests
             controller.pageSize = 3;
 
             //act
-            ProductListViewModel result = (ProductListViewModel)controller.List(2).Model;
+            ProductListViewModel result = (ProductListViewModel)controller.List(null,2).Model;
 
             //assert
 
@@ -85,7 +85,7 @@ namespace E_Store.UnitTests
             controller.pageSize = 3;
 
             //act
-            ProductListViewModel result = (ProductListViewModel)controller.List(2).Model;
+            ProductListViewModel result = (ProductListViewModel)controller.List(null,2).Model;
             PagingInfo pagingInfo = result.PagingInfo;
 
 
