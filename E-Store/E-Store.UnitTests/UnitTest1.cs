@@ -9,6 +9,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
+using System.Runtime;
+using Microsoft.CSharp;
 
 namespace E_Store.UnitTests
 {
@@ -125,8 +127,27 @@ namespace E_Store.UnitTests
             Assert.AreEqual(categories.Count, 3);
             Assert.AreEqual(categories[0], "Motherboards");
             Assert.AreEqual(categories[1], "Splitters");
-           
+        }
+        [TestMethod]
+        public void Can_Get_Selected_Category()
+        {
+            //arrange
+            Mock<IProductsRepository> mock = new Mock<IProductsRepository>();
+            mock.Setup(m => m.Products).Returns(new List<Product>
+            {
+                new Product() {ProductId=1, Name="Asus GTX", Category="VGA" },
+                new Product() {ProductId=2, Name="Gigabyte R290", Category="HDMI" }
+            });
 
+            NavController controller = new NavController(mock.Object);
+            string categoryToSelect = "VGA";
+
+            //act
+
+            string selectedCategory = controller.Menu(categoryToSelect).ViewBag.SelectedCategory;          
+          
+            //assert
+            Assert.AreEqual(selectedCategory, categoryToSelect);
 
         }
 
