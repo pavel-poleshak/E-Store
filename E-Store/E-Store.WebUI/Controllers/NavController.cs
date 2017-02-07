@@ -15,6 +15,7 @@ namespace E_Store.WebUI.Controllers
             repository = repo;
         }
         // GET: Nav
+       [ChildActionOnly]
         public PartialViewResult Menu(string category = null)
         {
             ViewBag.SelectedCategory = category;
