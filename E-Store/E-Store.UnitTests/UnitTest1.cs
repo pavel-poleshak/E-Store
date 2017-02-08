@@ -150,6 +150,35 @@ namespace E_Store.UnitTests
             Assert.AreEqual(selectedCategory, categoryToSelect);
 
         }
+        [TestMethod]
+        public void Can_Get_Products_By_Category()
+        {
+            //arrange
+            Mock<IProductsRepository> mock = new Mock<IProductsRepository>();
+            mock.Setup(m => m.Products).Returns(new List<Product>
+            {
+                new Product() {ProductId=1, Category=null },
+                new Product() {ProductId=2,Category="VGA" },
+                new Product() {ProductId=3,Category=null },
+                new Product() {ProductId=4,Category="VGA" },
+                new Product() {ProductId=5,Category="HDMI" },
+                new Product() {ProductId=6,Category="DVI" },
+                new Product() {ProductId=7,Category=null }
+            });
 
+            ProductController controller = new ProductController(mock.Object);
+            controller.pageSize = 10;
+
+            //act
+            var result = (ProductListViewModel)controller.List("HDMI").Model;
+            int totalItems = result.PagingInfo.TotalItems;
+
+            List<Product> list = result.Products.ToList();
+            //assert
+
+            Assert.AreEqual(totalItems, 1);
+            Assert.AreEqual(list[0].Category, "HDMI");
+            //Assert.AreEqual(list[1].Category, "VGA");
+        }
     }
 }
