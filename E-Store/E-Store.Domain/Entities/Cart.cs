@@ -39,5 +39,12 @@ namespace E_Store.Domain.Entities
         {
             return cartItems.Sum(i => i.Product.Price * i.Quantity);
         }
+
+        public void Clear()
+        {
+            cartItems.Clear();
+        }
+
+        public IEnumerable<CartItem> Items { get; }
     }
 }
