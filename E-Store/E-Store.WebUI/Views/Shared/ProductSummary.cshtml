@@ -5,5 +5,15 @@
         <span class="pull-right label label-primary">@Model.Price.ToString("# BYN")</span>
     </h3>
     <span class="lead">@Model.Description</span>
+    <div class="pull-right">
+        @using (Html.BeginForm("AddToCart", "Cart"))
+        {
+            @Html.HiddenFor(p => p.ProductId);
+            @Html.Hidden("returnUrl", Request.Url.PathAndQuery);
+            <input type="submit" class="btn btn-success btn-sm"  value="Добавить в корзину"/>
+
+
+        }
+    </div>
 </div>
 
