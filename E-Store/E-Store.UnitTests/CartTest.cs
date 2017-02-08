@@ -71,8 +71,53 @@ namespace E_Store.UnitTests
 
             Assert.AreEqual(cart.Items.Where(p => p.Product.ProductId == p1.ProductId).Count(), 0);
             Assert.AreEqual(cart.Items.Count(), 2);
+        }
 
+        [TestMethod]
+        public void Can_Calculate_Carts_Price()
+        {
+            //arrange
+            Product p1 = new Product() { ProductId = 2, Name = "Kaspersky AV", Price = 10M };
+            Product p2 = new Product() { ProductId = 1, Name = "NOD32", Price = 13M };
+            Product p3 = new Product() { ProductId = 3, Name = "AVG", Price = 8M };
+
+            Cart cart = new Cart();
+            cart.AddItem(p1, 1);
+            cart.AddItem(p2, 2);
+            cart.AddItem(p3, 3);
+
+            //act
+
+            decimal totalPrice = cart.CalculateTotalPrice();
+
+            //assert
+
+            Assert.AreEqual(totalPrice, 60M);
 
         }
+        [TestMethod]
+        public void Can_Clear_Cart()
+        {
+            //arange
+            Product p1 = new Product() { ProductId = 2, Name = "Kaspersky AV", Price = 10M };
+            Product p2 = new Product() { ProductId = 1, Name = "NOD32", Price = 13M };
+            Product p3 = new Product() { ProductId = 3, Name = "AVG", Price = 8M };
+
+            Cart cart = new Cart();
+            cart.AddItem(p1,1);
+            cart.AddItem(p2,1);
+            cart.AddItem(p3,1);
+
+            //act
+
+            cart.Clear();
+
+            //assert
+
+            Assert.AreEqual(cart.Items.Count(), 0);
+
+        }
+
+
     }
 }
