@@ -48,7 +48,29 @@ namespace E_Store.UnitTests
             Assert.AreEqual(items[0].Quantity, 1);
             Assert.AreEqual(items[1].Product, p1);
             Assert.AreEqual(items[1].Quantity, 3);
+        }
 
+        [TestMethod]
+        public void Can_Remove_Items_From_Cart()
+        {
+            //arrange
+            Product p1 = new Product() { ProductId = 2, Name = "Kaspersky AV" };
+            Product p2 = new Product() { ProductId = 1, Name = "NOD32" };
+            Product p3 = new Product() { ProductId = 3, Name = "AVG" };
+            Cart cart = new Cart();
+
+            cart.AddItem(p1, 2);
+            cart.AddItem(p2, 1);
+            cart.AddItem(p3, 3);
+
+            //act
+
+            cart.RemoveItem(p1);
+
+            //assert
+
+            Assert.AreEqual(cart.Items.Where(p => p.Product.ProductId == p1.ProductId).Count(), 0);
+            Assert.AreEqual(cart.Items.Count(), 2);
 
 
         }
