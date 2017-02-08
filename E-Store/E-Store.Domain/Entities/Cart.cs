@@ -35,5 +35,9 @@ namespace E_Store.Domain.Entities
             cartItems.RemoveAll(c => c.Product.ProductId == product.ProductId);
         }
 
+        public decimal CalculateTotalPrice()
+        {
+            return cartItems.Sum(i => i.Product.Price * i.Quantity);
+        }
     }
 }
