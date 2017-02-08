@@ -1,4 +1,5 @@
 ﻿using E_Store.Domain.Abstract;
+using E_Store.WebUI.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,13 +19,19 @@ namespace E_Store.WebUI.Controllers
        [ChildActionOnly]
         public PartialViewResult Menu(string category = null)
         {
-            ViewBag.SelectedCategory = category;
+            //ViewBag.SelectedCategory = category;
             IEnumerable<string> categories = repository.Products
                 .Select(p => p.Category)
                 .Where(p => p != null && p != "")
                 .Distinct()
                 .OrderBy(x => x);
-            return PartialView(categories);
+            MenuItemsViewModel model = new MenuItemsViewModel()
+            {
+                Categories = categories,
+                SelectedCategory = category
+
+            };
+            return PartialView(model);
         }
     }
 }

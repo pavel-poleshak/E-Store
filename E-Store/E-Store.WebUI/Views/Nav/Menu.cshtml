@@ -1,9 +1,10 @@
-﻿@model IEnumerable<string>
+﻿@using E_Store.WebUI.Models
+@model MenuItemsViewModel
 
 @Html.ActionLink("Домой", "List", "Product", null,
     new { @class = "btn btn-block btn-default btn-lg" })
 
-@foreach (var link in Model)
+@foreach (var link in Model.Categories)
 
     {
      @Html.RouteLink(link, new
@@ -14,7 +15,7 @@
             page = 1
         }, new
       {
-          @class = "btn btn-block btn-default btn-lg"+(link==ViewBag.SelectedCategory?" btn-primary":"")
+          @class = "btn btn-block btn-default btn-lg"+(link==Model.SelectedCategory?" btn-primary":"")
           
       })
    
