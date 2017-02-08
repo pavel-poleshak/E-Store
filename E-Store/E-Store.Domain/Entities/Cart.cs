@@ -29,5 +29,11 @@ namespace E_Store.Domain.Entities
                 items.Quantity += quantity;              
             }
         }
+
+        public void RemoveItem(Product product)
+        {
+            cartItems.RemoveAll(c => c.Product.ProductId == product.ProductId);
+        }
+
     }
 }
