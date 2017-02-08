@@ -23,21 +23,35 @@ namespace E_Store.WebUI.Controllers
         // GET: Product
         public ViewResult List(string category, int page = 1)
         {
+            IEnumerable<Product> listOfProducts = new List<Product>();
+           
+            if (category==null)
+            {
+                listOfProducts =  repository.Products
+                                 .OrderBy(p=>p.ProductId)
+                                 .Skip((page-1)*pageSize)
+                                 .Take(pageSize);
+            }
+            else
+            {
+                listOfProducts = repository.Products
+                                .Where(p =>p.Category == category)
+                                .OrderBy(p => p.ProductId)
+                                .Skip((page - 1) * pageSize)
+                                .Take(pageSize);
+            }
             ProductListViewModel model = new ProductListViewModel()
             {
-                Products = repository.Products
-                .Where(p=>p.Category==null||p.Category==category)
-                .OrderBy(p => p.ProductId)
-                .Skip((page - 1) * pageSize)
-                .Take(pageSize),
+                Products = listOfProducts,
                 PagingInfo = new PagingInfo()
                 {
                     CurrentPage = page,
                     ItemsPerPage = pageSize,
-                    TotalItems = repository.Products.Count()
+                    TotalItems = category == null ? repository.Products.Count() :
+                    repository.Products.Where(p => p.Category == category).Count()
                 },
                 CurrentCategory = category
-                
+
             };
             return View(model);
         }
