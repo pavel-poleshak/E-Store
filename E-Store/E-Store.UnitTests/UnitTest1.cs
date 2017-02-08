@@ -120,7 +120,8 @@ namespace E_Store.UnitTests
             NavController controller = new NavController(mock.Object);
 
             //act          
-            List<string> categories = ((IEnumerable<string>)controller.Menu().Model).ToList();
+            var model = (MenuItemsViewModel)controller.Menu().Model;
+            List<string> categories = model.Categories.ToList();
 
             //assert
 
@@ -144,7 +145,8 @@ namespace E_Store.UnitTests
 
             //act
 
-            string selectedCategory = controller.Menu(categoryToSelect).ViewBag.SelectedCategory;          
+            var model = (MenuItemsViewModel)controller.Menu(categoryToSelect).Model;
+            string selectedCategory = model.SelectedCategory;         
           
             //assert
             Assert.AreEqual(selectedCategory, categoryToSelect);
