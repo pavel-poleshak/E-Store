@@ -45,6 +45,6 @@ namespace E_Store.Domain.Entities
             cartItems.Clear();
         }
 
-        public IEnumerable<CartItem> Items { get; }
+        public IEnumerable<CartItem> Items { get { return cartItems; } }
     }
 }
