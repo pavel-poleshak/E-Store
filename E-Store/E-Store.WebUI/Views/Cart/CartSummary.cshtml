@@ -1,0 +1,18 @@
+﻿@model E_Store.Domain.Entities.Cart
+
+@{
+    ViewBag.Title = "CartSummary";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="navbar-right">
+    @Html.ActionLink("Перейти к корзине", "Index", "Cart",
+    new { returnUrl = Request.Url.PathAndQuery },
+    new { @class = "btn btn-default navbar-btn" });
+</div>
+
+<div class="navbar-right navbar-text">
+    <b>Ваша корзина:</b>
+    @Model.Items.Sum(p=>p.Quantity) позиций,
+    @Model.CalculateTotalPrice().ToString("# BYN")
+</div>
