@@ -37,6 +37,7 @@ namespace E_Store.WebUI.Controllers
             }
             return RedirectToAction("Index", new { returnUrl});
         }
+
         public RedirectToRouteResult RemoveFromCart(Cart cart, int productId, string returnUrl)
         {
             Product product = repository.Products.FirstOrDefault(p => p.ProductId == productId);
@@ -47,6 +48,7 @@ namespace E_Store.WebUI.Controllers
             return RedirectToAction("Index", new { returnUrl });
         }
 
+        [ChildActionOnly]
         public PartialViewResult CartSummary(Cart cart)
         {
             return PartialView(cart);
