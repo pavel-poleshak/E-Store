@@ -10,6 +10,5 @@ namespace E_Store.WebUI.Models
     {
         public Cart Cart { get; set; }
         public string ReturnUrl { get; set; }
-
     }
 }

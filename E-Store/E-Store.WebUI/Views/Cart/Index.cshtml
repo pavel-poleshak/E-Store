@@ -1,0 +1,40 @@
+﻿@model E_Store.WebUI.Models.CartIndexViewModel
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "E-Store: ваша корзина";
+}
+
+    <div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Количество товара</th>
+                    <th>Наименование</th>
+                    <th>Цена</th>
+                    <th>Стоимость</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Cart.Items)
+                {
+                    <tr>
+                        <td>@item.Quantity</td>
+                        <td>@item.Product.Name</td>
+                        <td>@item.Product.Price.ToString("# BYN")</td>
+                        <td>@((item.Product.Price * item.Quantity).ToString("# BYN"))</td>
+                    </tr>
+                }
+            </tbody>
+
+            <tfoot>
+                <tr>
+                    <td colspan="3">Итого</td>
+                    <td>@Model.Cart.CalculateTotalPrice().ToString("# BYN")</td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+    <div class="text-center">
+        <a class="btn btn-primary btn-lg" href="@Model.ReturnUrl">Продолжить покупки</a>
+    </div>
