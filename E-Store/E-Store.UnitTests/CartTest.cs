@@ -3,6 +3,11 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using E_Store.Domain.Entities;
 using System.Collections.Generic;
 using System.Linq;
+using Moq;
+using E_Store.Domain.Abstract;
+using E_Store.WebUI.Controllers;
+using System.Web.Mvc;
+using E_Store.WebUI.Models;
 
 namespace E_Store.UnitTests
 {
@@ -117,6 +122,68 @@ namespace E_Store.UnitTests
             Assert.AreEqual(cart.Items.Count(), 0);
 
         }
+
+        [TestMethod]
+        public void Can_Add_To_Cart()
+        {
+            // Arrange
+            Mock<IProductsRepository> mock = new Mock<IProductsRepository>();
+            mock.Setup(p => p.Products).Returns(new List<Product>()
+            {
+                new Product() {ProductId=1, Name="Kaspersky AV", Category="AV", Price=10M }
+            }.AsQueryable());
+
+            Cart cart = new Cart();
+            CartController controller = new CartController(mock.Object);
+
+            // Act
+            controller.AddToCart(cart, 1, null);
+
+            // Assert
+            Assert.AreEqual(cart.Items.Count(), 1);
+            Assert.AreEqual(cart.Items.ToList()[0].Product.ProductId, 1);
+
+        }
+
+        [TestMethod]
+        public void Adding_Product_To_Cart_And_Redirect_To_Cart()
+        {
+
+            // Arrange
+            Mock<IProductsRepository> mock = new Mock<IProductsRepository>();
+            mock.Setup(p => p.Products).Returns(new List<Product>()
+            {
+                new Product() {ProductId=1, Name="Kaspersky AV", Category="AV", Price=10M }
+            }.AsQueryable());
+
+            Cart cart = new Cart();
+            CartController controller = new CartController(mock.Object);
+
+            // Act
+            RedirectToRouteResult result = controller.AddToCart(cart, 1, "testUrl");
+
+            // Assert
+            Assert.AreEqual(result.RouteValues["action"], "Index");
+            Assert.AreEqual(result.RouteValues["returnUrl"], "testUrl");
+        }
+
+        [TestMethod]
+        public void Can_View_Cart_Content()
+        {
+            // Arrange
+            Cart cart = new Cart();
+            CartController controller = new CartController(null);
+
+            // Act
+            CartIndexViewModel result = (CartIndexViewModel)controller.Index(cart, "testUrl").Model;
+
+            // Assert
+            Assert.AreEqual(result.Cart, cart);
+            Assert.AreEqual(result.ReturnUrl, "testUrl");
+        }
+
+        
+
 
 
     }
