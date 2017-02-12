@@ -1,5 +1,6 @@
 ﻿using E_Store.Domain.Abstract;
 using E_Store.Domain.Entities;
+using E_Store.WebUI.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,9 +18,14 @@ namespace E_Store.WebUI.Controllers
             repository = repo;
         }
         // GET: Cart
-        public ActionResult Index()
+        public ActionResult Index(string returnUrl)
         {
-            return View();
+            return View(new CartIndexViewModel()
+            {
+                Cart = GetCart(),
+                ReturnUrl = returnUrl
+
+            });
         }
         public Cart GetCart()
         {
