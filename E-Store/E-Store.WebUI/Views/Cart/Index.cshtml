@@ -17,6 +17,7 @@
                     <th>Наименование</th>
                     <th>Цена</th>
                     <th>Стоимость</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
@@ -27,6 +28,14 @@
                         <td>@item.Product.Name</td>
                         <td>@item.Product.Price.ToString("# BYN")</td>
                         <td>@((item.Product.Price * item.Quantity).ToString("# BYN"))</td>
+                        <td>
+                            @using (Html.BeginForm("RemoveFromCart", "Cart"))
+                            {
+                                @Html.Hidden("productId", item.Product.ProductId)
+                                @Html.HiddenFor(m=>m.ReturnUrl)
+                                <input class="btn btn-sm btn-danger" type="submit" value="Удалить" />
+                            }
+                        </td>
                     </tr>
                 }
             </tbody>
