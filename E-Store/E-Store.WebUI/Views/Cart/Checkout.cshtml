@@ -1,0 +1,37 @@
+﻿@model E_Store.Domain.Entities.ShippingDetails
+
+@{
+    ViewBag.Title = "Checkout";
+}
+
+<h2>Оформление заказа</h2>
+<p>Укажите Ваши контактные данные</p>
+@using (Html.BeginForm())
+{
+    <h3>Ваши данные</h3>
+    <div class="form-group">
+        <label>Ваше имя:</label>
+        @Html.TextBoxFor(x=>x.Name, new { @class = "form-control" })
+    </div>
+
+    <h3>Данные для доставки</h3>
+    <div class="form-group">
+        <label>Адрес:</label>
+        @Html.TextBoxFor(x => x.Street, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        <label>Город:</label>
+        @Html.TextBoxFor(x => x.City, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        <label>Страна:</label>
+        @Html.TextBoxFor(x => x.Country, new { @class = "form-control" })
+    </div>
+
+    <div class="text-center">
+        <input class="btn btn-primary" type="submit" value="Обработать заказ" />
+    </div>
+
+
+}
+
