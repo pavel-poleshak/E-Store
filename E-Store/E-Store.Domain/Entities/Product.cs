@@ -10,13 +10,22 @@ namespace E_Store.Domain.Entities
     public class Product
     {
         public int ProductId { get; set; }
+
         [Display(Name ="Наименование")]
+        [Required(ErrorMessage ="Пожалуйста, введите наименование")]
         public string Name { get; set; }
+
         [Display(Name ="Описание")]
+        [Required(ErrorMessage ="Пожалуйста, введите описание товара")]
         public string Description { get; set; }
-        [Display(Name ="Цена")]
+
+        [Display(Name ="Цена")]        
+        [Required]
+        [Range(0.01, double.MaxValue, ErrorMessage = "Пожалуйста, укажите стоимость товара")]
         public decimal Price { get; set; }
+
         [Display(Name ="Категория")]
+        [Required(ErrorMessage = "Пожалуйста, введите категорию товара")]
         public string Category { get; set; }
     }
 }
