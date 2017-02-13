@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using E_Store.Domain.Entities;
 using E_Store.WebUI.Controllers;
 using System.Linq;
+using System.Web.Mvc;
 
 namespace E_Store.UnitTests
 {
@@ -80,10 +81,39 @@ namespace E_Store.UnitTests
             // Assert
 
             Assert.AreEqual(result, null);
+        }
 
-            
-                        
-           
+        [TestMethod]
+        public void Can_Save_Valid_Changes()
+        {
+            // Arrange
+            Mock<IProductsRepository> mock = new Mock<IProductsRepository>();
+            AdminController controller = new AdminController(mock.Object);
+            Product p1 = new Product() { ProductId = 1 };
+
+            // Act
+            ActionResult result = controller.Edit(p1);
+
+            // Assert
+            mock.Verify(m => m.SaveProduct(p1));
+            Assert.IsNotInstanceOfType(result, typeof(ViewResult));
+        }
+
+        [TestMethod]
+        public void Cant_Save_Invalid_Changes()
+        {
+            // Arrange
+            Mock<IProductsRepository> mock = new Mock<IProductsRepository>();
+            AdminController controller = new AdminController(mock.Object);
+            Product p1 = new Product() { ProductId = 1 };
+            controller.ModelState.AddModelError("Test Error", "Error");
+
+            // Act
+            ActionResult result = controller.Edit(p1);
+
+            // Assert
+            mock.Verify(m => m.SaveProduct(It.IsAny<Product>()), Times.Never());
+            Assert.IsInstanceOfType(result, typeof(ViewResult));
         }
     }
 }
