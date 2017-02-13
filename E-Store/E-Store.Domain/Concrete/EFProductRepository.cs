@@ -18,5 +18,24 @@ namespace E_Store.Domain.Concrete
                 return context.Products;
             }
         }
+        public void Save(Product product)
+        {
+            if (product.ProductId==0)
+            {
+                context.Products.Add(product);
+            }
+            else
+            {
+                Product dbEntry = context.Products.Find(product.ProductId);
+                if (dbEntry!=null)
+                {
+                    dbEntry.Name = product.Name;
+                    dbEntry.Description = product.Description;
+                    dbEntry.Category = product.Category;
+                    dbEntry.Price = product.Price;
+                }
+            }
+            context.SaveChanges();
+        }
     }
 }
