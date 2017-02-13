@@ -18,7 +18,7 @@ namespace E_Store.Domain.Concrete
                 return context.Products;
             }
         }
-        public void Save(Product product)
+        public void SaveProduct(Product product)
         {
             if (product.ProductId==0)
             {
