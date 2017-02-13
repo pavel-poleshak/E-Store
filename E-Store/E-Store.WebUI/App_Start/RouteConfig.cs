@@ -42,8 +42,8 @@ namespace E_Store.WebUI
                 new { page = @"\d+" }
             );
             routes.MapRoute(null,
-                "{controller}/{action}/{productId}",
-                null,
+                "Product/{action}/{productId}",
+                new {controller="Admin" },
                 new { productId = @"\d+" }
                 );
             routes.MapRoute(null, "{controller}/{action}");
