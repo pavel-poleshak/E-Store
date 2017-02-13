@@ -58,5 +58,32 @@ namespace E_Store.UnitTests
             Assert.AreEqual(p1.ProductId, 2);
             Assert.AreEqual(p2.ProductId, 3);
         }
+
+        [TestMethod]
+        public void Cant_Edit_Nonexistent_Product()
+        {
+            // Arrange
+            Mock<IProductsRepository> mock = new Mock<IProductsRepository>();
+            mock.Setup(m => m.Products).Returns(new List<Product>()
+            {
+                new Product() {ProductId=1 },
+                new Product() {ProductId=2 },
+                new Product() {ProductId=3 }
+            });
+
+            AdminController controller = new AdminController(mock.Object);
+
+            //Act
+
+            Product result = (Product)controller.Edit(6).Model;
+
+            // Assert
+
+            Assert.AreEqual(result, null);
+
+            
+                        
+           
+        }
     }
 }
