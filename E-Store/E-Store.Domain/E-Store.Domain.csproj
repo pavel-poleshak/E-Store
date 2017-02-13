@@ -86,11 +86,28 @@
     <Compile Include="Entities\CartItem.cs" />
     <Compile Include="Entities\Product.cs" />
     <Compile Include="Entities\ShippingDetails.cs" />
+    <Compile Include="Migrations\201702042039154_InitialCreate.cs" />
+    <Compile Include="Migrations\201702042039154_InitialCreate.Designer.cs">
+      <DependentUpon>201702042039154_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201702132056411_DataAttributs.cs" />
+    <Compile Include="Migrations\201702132056411_DataAttributs.Designer.cs">
+      <DependentUpon>201702132056411_DataAttributs.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201702042039154_InitialCreate.resx">
+      <DependentUpon>201702042039154_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201702132056411_DataAttributs.resx">
+      <DependentUpon>201702132056411_DataAttributs.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
