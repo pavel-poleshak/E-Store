@@ -11,17 +11,16 @@ namespace E_Store.WebUI.Infrastructure.ModelBinders
     {
         private const string sessionKey = "Cart";
 
-        public object BindModel(ControllerContext controllerContext,
-            ModelBindingContext bindingContext)
+        public object BindModel(ControllerContext controllerContext, ModelBindingContext bindingContext)
         {
-           
+
             Cart cart = null;
             if (controllerContext.HttpContext.Session != null)
             {
                 cart = (Cart)controllerContext.HttpContext.Session[sessionKey];
             }
 
-           
+
             if (cart == null)
             {
                 cart = new Cart();
@@ -31,7 +30,7 @@ namespace E_Store.WebUI.Infrastructure.ModelBinders
                 }
             }
 
-           
+
             return cart;
         }
     }
