@@ -115,5 +115,29 @@ namespace E_Store.UnitTests
             mock.Verify(m => m.SaveProduct(It.IsAny<Product>()), Times.Never());
             Assert.IsInstanceOfType(result, typeof(ViewResult));
         }
+
+        [TestMethod]
+        public void Can_Delete_Valid_Products()
+        {
+            // Arrange
+            Product product = new Product() { ProductId = 3, Name = "P3" };
+
+            Mock<IProductsRepository> mock = new Mock<IProductsRepository>();
+            mock.Setup(m => m.Products).Returns(new List<Product>()
+            {
+                new Product() {ProductId=1, Name="P1" },
+                new Product() {ProductId=2, Name="P2" },
+                new Product() {ProductId=3, Name="P3" }
+            });
+
+            AdminController controller = new AdminController(mock.Object);
+
+            // Act
+            controller.Delete(product.ProductId);
+
+            // Assert
+            mock.Verify(m => m.DeleteProduct(product.ProductId));
+
+        }
     }
 }
