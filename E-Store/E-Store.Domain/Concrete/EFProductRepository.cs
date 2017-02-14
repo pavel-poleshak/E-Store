@@ -18,6 +18,18 @@ namespace E_Store.Domain.Concrete
                 return context.Products;
             }
         }
+
+        public Product DeleteProduct(int productId)
+        {
+            Product dbEntry = context.Products.Find(productId);
+            if (dbEntry!=null)
+            {
+                context.Products.Remove(dbEntry);
+                context.SaveChanges();
+            }
+            return dbEntry;
+        }
+
         public void SaveProduct(Product product)
         {
             if (product.ProductId==0)

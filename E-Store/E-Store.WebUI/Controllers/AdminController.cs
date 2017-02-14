@@ -47,5 +47,18 @@ namespace E_Store.WebUI.Controllers
         {
             return View("Edit", new Product());
         }
+
+        [HttpPost]
+        public ActionResult Delete(int productId)
+        {
+            Product deletedProduct = repository.DeleteProduct(productId);
+            if (deletedProduct!=null)
+            {
+                TempData["message"] = string.Format("Товар \"{0}\" был удален", deletedProduct.Name);
+            }
+            return RedirectToAction("Index");
+
+
+        }
     }
 }
