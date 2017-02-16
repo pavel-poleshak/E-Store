@@ -5,49 +5,50 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using E_Store.Domain.Entities;
+using System.Data.Entity;
 
 namespace E_Store.Domain.Concrete
 {
-    public class EFProductRepository : IProductsRepository
+    public class EFProductRepository : IRepository<Product>
     {
-        EFProductContext context = new EFProductContext();
-        public IEnumerable<Product> Products
+        private EFDbContext context;
+
+        public EFProductRepository(EFDbContext context)
         {
-            get
+            this.context = context;
+        }
+        public void Create(Product item)
+        {
+            context.Products.Add(item);
+        }
+
+        public void Delete(int id)
+        {
+            Product product = context.Products.Find(id);
+            if (product!=null)
             {
-                return context.Products;
+                context.Products.Remove(product);
             }
         }
 
-        public Product DeleteProduct(int productId)
+        public IQueryable<Product> Find(Func<Product, bool> predicate)
         {
-            Product dbEntry = context.Products.Find(productId);
-            if (dbEntry!=null)
-            {
-                context.Products.Remove(dbEntry);
-                context.SaveChanges();
-            }
-            return dbEntry;
+            return context.Products.Where(predicate).AsQueryable();
         }
 
-        public void SaveProduct(Product product)
+        public Product Get(int id)
         {
-            if (product.ProductId==0)
-            {
-                context.Products.Add(product);
-            }
-            else
-            {
-                Product dbEntry = context.Products.Find(product.ProductId);
-                if (dbEntry!=null)
-                {
-                    dbEntry.Name = product.Name;
-                    dbEntry.Description = product.Description;
-                    dbEntry.Category = product.Category;
-                    dbEntry.Price = product.Price;
-                }
-            }
-            context.SaveChanges();
+            return context.Products.Find(id);
+        }
+
+        public IQueryable<Product> GetAll()
+        {
+           return context.Products;
+        }
+
+        public void Update(Product item)
+        {
+           context.Entry(item).State=EntityState.Modified;
         }
     }
 }
