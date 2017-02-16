@@ -19,7 +19,10 @@ namespace E_Store.Domain.Concrete
         }
         public void Create(Product item)
         {
-            context.Products.Add(item);
+            if (item!=null)
+            {
+                context.Products.Add(item);
+            }            
         }
 
         public void Delete(int id)
