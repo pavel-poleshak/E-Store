@@ -8,11 +8,11 @@ using System.Threading.Tasks;
 
 namespace E_Store.Domain.Concrete
 {
-    public class EFProductContext:DbContext
+    public class EFDbContext:DbContext
     {
         public DbSet<Product> Products { get; set; }
 
-        public EFProductContext():base("EStoreDB")
+        public EFDbContext():base("EStoreDB")
         {
 
         }
