@@ -12,10 +12,13 @@ namespace E_Store.WebUI.Controllers
     public class CartController : Controller
     {
         IProductsRepository repository;
+        IOrderProcessor orderProcessor;
 
-        public CartController(IProductsRepository repo)
+
+        public CartController(IProductsRepository repo, IOrderProcessor processor)
         {
             repository = repo;
+            orderProcessor = processor;
         }
         // GET: Cart
         public ViewResult Index(Cart cart, string returnUrl)
@@ -54,9 +57,18 @@ namespace E_Store.WebUI.Controllers
             return PartialView(cart);
         }
 
-        public ViewResult Checkout(Cart cart, ShippingDetails shippingDetails)
+        public ViewResult Checkout(ShippingDetails shippingDetails)
         {
             return View(new ShippingDetails());
+        }
+
+        [HttpPost]
+        public ViewResult Checkout(Cart cart, ShippingDetails shippingDetails)
+        {
+            
+            orderProcessor.ProcessOrder(cart, shippingDetails);
+            TempData["message"] = "Заказ успешно оформлен";          
+            return View();
         }
     }
 }

@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace E_Store.Domain.Abstract
 {
-    public interface IOrderProcessor
+    public interface IOrdersRepository
     {
-        void ProcessOrder(Cart cart, ShippingDetails shippingDetails);
-        
+        IEnumerable<Order> Orders { get; }
+        void SaveOrder(Order order);
     }
 }

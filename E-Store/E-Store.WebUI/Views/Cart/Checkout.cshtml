@@ -3,7 +3,10 @@
 @{
     ViewBag.Title = "Checkout";
 }
-
+@if (TempData["message"]!=null)
+{
+    <div class="alert alert-info">@TempData["message"]</div>
+}
 <h2>Оформление заказа</h2>
 <p>Укажите Ваши контактные данные</p>
 @using (Html.BeginForm())

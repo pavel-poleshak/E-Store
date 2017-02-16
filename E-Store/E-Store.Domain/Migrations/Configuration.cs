@@ -5,7 +5,7 @@ namespace E_Store.Domain.Migrations
     using System.Data.Entity.Migrations;
     using System.Linq;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<E_Store.Domain.Concrete.EFDbContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<E_Store.Domain.Concrete.EFProductContext>
     {
         public Configuration()
         {
@@ -13,7 +13,7 @@ namespace E_Store.Domain.Migrations
             ContextKey = "E_Store.Domain.Concrete.EFDbContext";
         }
 
-        protected override void Seed(E_Store.Domain.Concrete.EFDbContext context)
+        protected override void Seed(E_Store.Domain.Concrete.EFProductContext context)
         {
             //  This method will be called after migrating to the latest version.
 

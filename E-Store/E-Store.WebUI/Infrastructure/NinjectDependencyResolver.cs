@@ -38,6 +38,8 @@ namespace E_Store.WebUI.Infrastructure
 
             //});
             kernel.Bind<IProductsRepository>().To<EFProductRepository>();
+            kernel.Bind<IOrdersRepository>().To<EFOrderRepository>();
+            kernel.Bind<IOrderProcessor>().To<OrderProcessor>();
         }
     }
 }
