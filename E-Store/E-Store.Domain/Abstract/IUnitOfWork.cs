@@ -12,7 +12,7 @@ namespace E_Store.Domain.Abstract
         IRepository<Customer> Customers { get; }
         IRepository<Product> Products { get; }
         IRepository<Order> Orders { get; }
-        IRepository<OrderLine> OrderLines { get; }
+        IOrderLineRepository OrderLines { get; }
         void Save();
     }
 }
