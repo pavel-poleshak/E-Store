@@ -12,6 +12,11 @@ namespace E_Store.Domain.Concrete
     {
         EFDbContext context;
 
+        public EFOrderLineRepository(EFDbContext context)
+        {
+            this.context = context;
+        }
+
         public void Create(OrderLine item)
         {
             if (item!=null)
