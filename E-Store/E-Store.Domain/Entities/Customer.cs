@@ -10,6 +10,7 @@ namespace E_Store.Domain.Entities
     {
         public string Name { get; set; }
         public string Email { get; set; }
+        public DateTime CreatingDate { get; set; }
         public virtual ICollection<Order> Orders { get; set; }
     }
 }
