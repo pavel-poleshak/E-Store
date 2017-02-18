@@ -15,7 +15,7 @@ namespace E_Store.Domain.Concrete
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderLine> OrderLines { get; set; }
 
-        public EFDbContext():base("EStoreDB")
+        public EFDbContext(string connectionString = "EStoreDB") : base(connectionString)
         {
 
         }

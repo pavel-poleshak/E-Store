@@ -15,10 +15,14 @@ namespace E_Store.Domain.Concrete
         private EFProductRepository productRepository;
         private EFOrderRepository orderRepository;
         private EFOrderLineRepository orderLineRepository;
-        
-        public EFUnitOfWork(EFDbContext context)
+
+        public EFUnitOfWork()
         {
-            this.context = context;
+            this.context = new EFDbContext();
+        }
+        public EFUnitOfWork(string connectionString)
+        {
+            this.context = new EFDbContext(connectionString);
         }
 
         public IRepository<Customer> Customers

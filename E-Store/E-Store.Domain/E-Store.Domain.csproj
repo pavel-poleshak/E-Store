@@ -77,12 +77,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Abstract\IOrderLineRepository.cs" />
     <Compile Include="Abstract\IOrderProcessor.cs" />
     <Compile Include="Abstract\IRepository.cs" />
+    <Compile Include="Abstract\IUnitOfWork.cs" />
+    <Compile Include="Concrete\EFCustomerRepository.cs" />
+    <Compile Include="Concrete\EFOrderLineRepository.cs" />
     <Compile Include="Concrete\EFOrderRepository.cs" />
     <Compile Include="Concrete\EFDbContext.cs" />
     <Compile Include="Concrete\EFProductRepository.cs" />
-    <Compile Include="Concrete\OrderProcessor.cs" />
+    <Compile Include="Concrete\EFUnitOfWork.cs" />
     <Compile Include="Entities\Cart.cs" />
     <Compile Include="Entities\CartItem.cs" />
     <Compile Include="Entities\Customer.cs" />
