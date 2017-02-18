@@ -87,6 +87,7 @@
     <Compile Include="Entities\CartItem.cs" />
     <Compile Include="Entities\Customer.cs" />
     <Compile Include="Entities\Order.cs" />
+    <Compile Include="Entities\OrderLine.cs" />
     <Compile Include="Entities\Product.cs" />
     <Compile Include="Entities\ShippingDetails.cs" />
     <Compile Include="Migrations\201702042039154_InitialCreate.cs" />
