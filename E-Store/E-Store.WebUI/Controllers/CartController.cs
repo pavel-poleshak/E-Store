@@ -11,14 +11,13 @@ namespace E_Store.WebUI.Controllers
 {
     public class CartController : Controller
     {
-        IProductsRepository repository;
+        IUnitOfWork repository;
         IOrderProcessor orderProcessor;
 
 
-        public CartController(IProductsRepository repo, IOrderProcessor processor)
+        public CartController(IUnitOfWork repo)
         {
-            repository = repo;
-            orderProcessor = processor;
+            repository = repo;            
         }
         // GET: Cart
         public ViewResult Index(Cart cart, string returnUrl)
@@ -33,7 +32,7 @@ namespace E_Store.WebUI.Controllers
 
         public RedirectToRouteResult AddToCart(Cart cart, int productId, string returnUrl)
         {
-            Product product = repository.Products.FirstOrDefault(p => p.ProductId == productId);
+            Product product = repository.Products.GetAll().FirstOrDefault(p => p.ProductId == productId);
             if (product!=null)
             {
                 cart.AddItem(product, 1);
@@ -43,7 +42,7 @@ namespace E_Store.WebUI.Controllers
 
         public RedirectToRouteResult RemoveFromCart(Cart cart, int productId, string returnUrl)
         {
-            Product product = repository.Products.FirstOrDefault(p => p.ProductId == productId);
+            Product product = repository.Products.GetAll().FirstOrDefault(p => p.ProductId == productId);
             if (product!=null)
             {
                 cart.RemoveItem(product);

@@ -127,8 +127,8 @@ namespace E_Store.UnitTests
         public void Can_Add_To_Cart()
         {
             // Arrange
-            Mock<IProductsRepository> mock = new Mock<IProductsRepository>();
-            mock.Setup(p => p.Products).Returns(new List<Product>()
+            Mock<IUnitOfWork> mock = new Mock<IUnitOfWork>();
+            mock.Setup(p => p.Products.GetAll()).Returns(new List<Product>()
             {
                 new Product() {ProductId=1, Name="Kaspersky AV", Category="AV", Price=10M }
             }.AsQueryable());
@@ -150,8 +150,8 @@ namespace E_Store.UnitTests
         {
 
             // Arrange
-            Mock<IProductsRepository> mock = new Mock<IProductsRepository>();
-            mock.Setup(p => p.Products).Returns(new List<Product>()
+            Mock<IUnitOfWork> mock = new Mock<IUnitOfWork>();
+            mock.Setup(p => p.Products.GetAll()).Returns(new List<Product>()
             {
                 new Product() {ProductId=1, Name="Kaspersky AV", Category="AV", Price=10M }
             }.AsQueryable());

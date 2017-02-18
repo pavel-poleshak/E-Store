@@ -17,18 +17,18 @@ namespace E_Store.UnitTests
         public void Index_Contains_All_Products()
         {
             // Arrange
-            Mock<IProductsRepository> mock = new Mock<IProductsRepository>();
-            mock.Setup(m => m.Products).Returns(new List<Product>()
+            Mock<IUnitOfWork> mock = new Mock<IUnitOfWork>();
+            mock.Setup(m => m.Products.GetAll()).Returns(new List<Product>()
             {
                 new Product() {ProductId=1 },
                 new Product() {ProductId=2 },
                 new Product() {ProductId=3 }
-            });
+            }.AsQueryable());
 
             AdminController controller = new AdminController(mock.Object);
 
             // Act
-            List<Product> result = ((IEnumerable<Product>)controller.Index().Model).ToList();
+            List<Product> result = ((IQueryable<Product>)(controller.Index().Model)).ToList();
 
             // Assert
             Assert.AreEqual(result.Count, 3);
@@ -41,13 +41,13 @@ namespace E_Store.UnitTests
         public void Can_Edit()
         {
             // Arrange
-            Mock<IProductsRepository> mock = new Mock<IProductsRepository>();
-            mock.Setup(m => m.Products).Returns(new List<Product>()
+            Mock<IUnitOfWork> mock = new Mock<IUnitOfWork>();
+            mock.Setup(m => m.Products.GetAll()).Returns(new List<Product>()
             {
                 new Product() {ProductId=1 },
                 new Product() {ProductId=2 },
                 new Product() {ProductId=3 }
-            });
+            }.AsQueryable());
 
             AdminController controller = new AdminController(mock.Object);
 
@@ -64,13 +64,13 @@ namespace E_Store.UnitTests
         public void Cant_Edit_Nonexistent_Product()
         {
             // Arrange
-            Mock<IProductsRepository> mock = new Mock<IProductsRepository>();
-            mock.Setup(m => m.Products).Returns(new List<Product>()
+            Mock<IUnitOfWork> mock = new Mock<IUnitOfWork>();
+            mock.Setup(m => m.Products.GetAll()).Returns(new List<Product>()
             {
                 new Product() {ProductId=1 },
                 new Product() {ProductId=2 },
                 new Product() {ProductId=3 }
-            });
+            }.AsQueryable());
 
             AdminController controller = new AdminController(mock.Object);
 
@@ -87,7 +87,8 @@ namespace E_Store.UnitTests
         public void Can_Save_Valid_Changes()
         {
             // Arrange
-            Mock<IProductsRepository> mock = new Mock<IProductsRepository>();
+            Mock<IUnitOfWork> mock = new Mock<IUnitOfWork>();
+            mock.Setup(m => m.Products.GetAll()).Returns(new List<Product>().AsQueryable());
             AdminController controller = new AdminController(mock.Object);
             Product p1 = new Product() { ProductId = 1 };
 
@@ -95,7 +96,7 @@ namespace E_Store.UnitTests
             ActionResult result = controller.Edit(p1);
 
             // Assert
-            mock.Verify(m => m.SaveProduct(p1));
+            mock.Verify(m => m.Products.Update(p1));
             Assert.IsNotInstanceOfType(result, typeof(ViewResult));
         }
 
@@ -103,7 +104,7 @@ namespace E_Store.UnitTests
         public void Cant_Save_Invalid_Changes()
         {
             // Arrange
-            Mock<IProductsRepository> mock = new Mock<IProductsRepository>();
+            Mock<IUnitOfWork> mock = new Mock<IUnitOfWork>();
             AdminController controller = new AdminController(mock.Object);
             Product p1 = new Product() { ProductId = 1 };
             controller.ModelState.AddModelError("Test Error", "Error");
@@ -112,7 +113,7 @@ namespace E_Store.UnitTests
             ActionResult result = controller.Edit(p1);
 
             // Assert
-            mock.Verify(m => m.SaveProduct(It.IsAny<Product>()), Times.Never());
+            mock.Verify(m => m.Products.Update(It.IsAny<Product>()), Times.Never());
             Assert.IsInstanceOfType(result, typeof(ViewResult));
         }
 
@@ -122,13 +123,13 @@ namespace E_Store.UnitTests
             // Arrange
             Product product = new Product() { ProductId = 3, Name = "P3" };
 
-            Mock<IProductsRepository> mock = new Mock<IProductsRepository>();
-            mock.Setup(m => m.Products).Returns(new List<Product>()
+            Mock<IUnitOfWork> mock = new Mock<IUnitOfWork>();
+            mock.Setup(m => m.Products.GetAll()).Returns(new List<Product>()
             {
                 new Product() {ProductId=1, Name="P1" },
                 new Product() {ProductId=2, Name="P2" },
                 new Product() {ProductId=3, Name="P3" }
-            });
+            }.AsQueryable());
 
             AdminController controller = new AdminController(mock.Object);
 
@@ -136,7 +137,7 @@ namespace E_Store.UnitTests
             controller.Delete(product.ProductId);
 
             // Assert
-            mock.Verify(m => m.DeleteProduct(product.ProductId));
+            mock.Verify(m => m.Products.Delete(product.ProductId));
 
         }
     }

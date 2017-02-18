@@ -9,9 +9,9 @@ namespace E_Store.Domain.Entities
     public class Order
     {
         public int OrderId { get; set; }
-        public DateTime CreatingDate { get; private set; }
-        public virtual ICollection<OrderLine> OrderLines { get;  private set; }
-        public ShippingDetails ShippingDetails { get; private set; }
+        public DateTime CreatingDate { get; set; }
+        public virtual ICollection<OrderLine> OrderLines { get; set; }
+        public ShippingDetails ShippingDetails { get; set; }
 
         public Order (DateTime creatingDate, ShippingDetails shippingDetails)
         {

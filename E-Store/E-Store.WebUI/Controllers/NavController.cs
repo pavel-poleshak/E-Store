@@ -10,8 +10,8 @@ namespace E_Store.WebUI.Controllers
 {
     public class NavController : Controller
     {
-        IProductsRepository repository;
-        public NavController(IProductsRepository repo)
+        IUnitOfWork repository;
+        public NavController(IUnitOfWork repo)
         {
             repository = repo;
         }
@@ -20,7 +20,7 @@ namespace E_Store.WebUI.Controllers
         public PartialViewResult Menu(string category = null)
         {
             //ViewBag.SelectedCategory = category;
-            IEnumerable<string> categories = repository.Products
+            IEnumerable<string> categories = repository.Products.GetAll()
                 .Select(p => p.Category)
                 .Where(p => p != null && p != "")
                 .Distinct()

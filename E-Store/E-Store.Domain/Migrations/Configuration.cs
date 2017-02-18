@@ -9,8 +9,7 @@ namespace E_Store.Domain.Migrations
     {
         public Configuration()
         {
-            AutomaticMigrationsEnabled = false;
-            ContextKey = "E_Store.Domain.Concrete.EFDbContext";
+            AutomaticMigrationsEnabled = true;
         }
 
         protected override void Seed(E_Store.Domain.Concrete.EFDbContext context)

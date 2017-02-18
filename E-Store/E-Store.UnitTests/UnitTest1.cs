@@ -21,8 +21,9 @@ namespace E_Store.UnitTests
         public void Can_Paginate()
         {
             //arrange
-            Mock<IProductsRepository> mock = new Mock<IProductsRepository>();
-            mock.Setup(m => m.Products).Returns(new List<Product>()
+            Mock<IUnitOfWork> mock = new Mock<IUnitOfWork>();
+            
+            mock.Setup(m => m.Products.GetAll()).Returns(new List<Product>()
             {
                 new Product() {ProductId=1, Name="P1" },
                 new Product() {ProductId=2, Name="P2" },
@@ -32,7 +33,7 @@ namespace E_Store.UnitTests
                 new Product() {ProductId=6, Name="P6" },
                 new Product() {ProductId=7, Name="P7" },
 
-            });
+            }.AsQueryable());
             ProductController controller = new ProductController(mock.Object);
             controller.pageSize = 3;
 
@@ -73,15 +74,15 @@ namespace E_Store.UnitTests
         public void Can_Send_Pagination_View_Model()
         {
             //arrange
-            Mock<IProductsRepository> mock = new Mock<IProductsRepository>();
-            mock.Setup(m => m.Products).Returns(new List<Product>()
+            Mock<IUnitOfWork> mock = new Mock<IUnitOfWork>();
+            mock.Setup(m => m.Products.GetAll()).Returns(new List<Product>()
             {
                 new Product() {ProductId=1,Name="Screen" },
                 new Product() {ProductId=2, Name="Mouse" },
                 new Product() {ProductId=3,Name="keyboard" },
                 new Product() {ProductId=4, Name="TouchPad" },
                 new Product() {ProductId=5,Name="Cable" }
-            });
+            }.AsQueryable());
 
             ProductController controller = new ProductController(mock.Object);
             controller.pageSize = 3;
@@ -104,8 +105,8 @@ namespace E_Store.UnitTests
         public void Can_Create_Categories()
         {
             //arrange
-            Mock<IProductsRepository> mock = new Mock<IProductsRepository>();
-            mock.Setup(m => m.Products).Returns(new List<Product>
+            Mock<IUnitOfWork> mock = new Mock<IUnitOfWork>();
+            mock.Setup(m => m.Products.GetAll()).Returns(new List<Product>
             {
                 new Product() {ProductId=1, Category="Motherboards" },
                 new Product() {ProductId=2, Category="Videocards" },
@@ -115,7 +116,7 @@ namespace E_Store.UnitTests
                 new Product() {ProductId=6, Category="" },
                 new Product() {ProductId=7 }
 
-            });
+            }.AsQueryable());
 
             NavController controller = new NavController(mock.Object);
 
@@ -133,12 +134,12 @@ namespace E_Store.UnitTests
         public void Can_Get_Selected_Category()
         {
             //arrange
-            Mock<IProductsRepository> mock = new Mock<IProductsRepository>();
-            mock.Setup(m => m.Products).Returns(new List<Product>
+            Mock<IUnitOfWork> mock = new Mock<IUnitOfWork>();
+            mock.Setup(m => m.Products.GetAll()).Returns(new List<Product>
             {
                 new Product() {ProductId=1, Name="Asus GTX", Category="VGA" },
                 new Product() {ProductId=2, Name="Gigabyte R290", Category="HDMI" }
-            });
+            }.AsQueryable());
 
             NavController controller = new NavController(mock.Object);
             string categoryToSelect = "VGA";
@@ -156,8 +157,8 @@ namespace E_Store.UnitTests
         public void Can_Get_Products_By_Category()
         {
             //arrange
-            Mock<IProductsRepository> mock = new Mock<IProductsRepository>();
-            mock.Setup(m => m.Products).Returns(new List<Product>
+            Mock<IUnitOfWork> mock = new Mock<IUnitOfWork>();
+            mock.Setup(m => m.Products.GetAll()).Returns(new List<Product>
             {
                 new Product() {ProductId=1, Category=null },
                 new Product() {ProductId=2,Category="VGA" },
@@ -166,7 +167,7 @@ namespace E_Store.UnitTests
                 new Product() {ProductId=5,Category="HDMI" },
                 new Product() {ProductId=6,Category="DVI" },
                 new Product() {ProductId=7,Category=null }
-            });
+            }.AsQueryable());
 
             ProductController controller = new ProductController(mock.Object);
             controller.pageSize = 10;

@@ -11,13 +11,13 @@ namespace E_Store.WebUI.Controllers
 {
     public class ProductController : Controller
     {
-        private IProductsRepository repository;
+        private IUnitOfWork repository;
         public int pageSize = 4;
        
         
-        public ProductController(IProductsRepository productRepository)
+        public ProductController(IUnitOfWork unitOfWork)
         {
-            repository = productRepository;
+            repository = unitOfWork;
         }
        
         // GET: Product
@@ -27,14 +27,14 @@ namespace E_Store.WebUI.Controllers
            
             if (category==null)
             {
-                listOfProducts =  repository.Products
+                listOfProducts =  repository.Products.GetAll()
                                  .OrderBy(p=>p.ProductId)
                                  .Skip((page-1)*pageSize)
                                  .Take(pageSize);
             }
             else
             {
-                listOfProducts = repository.Products
+                listOfProducts = repository.Products.GetAll()
                                 .Where(p =>p.Category == category)
                                 .OrderBy(p => p.ProductId)
                                 .Skip((page - 1) * pageSize)
@@ -47,8 +47,8 @@ namespace E_Store.WebUI.Controllers
                 {
                     CurrentPage = page,
                     ItemsPerPage = pageSize,
-                    TotalItems = category == null ? repository.Products.Count() :
-                    repository.Products.Where(p => p.Category == category).Count()
+                    TotalItems = category == null ? repository.Products.GetAll().Count() :
+                    repository.Products.GetAll().Where(p => p.Category == category).Count()
                 },
                 CurrentCategory = category
 
