@@ -10,15 +10,15 @@ namespace E_Store.Domain.Entities
     {
         public int OrderId { get; set; }
         public DateTime CreatingDate { get; private set; }
-        public IEnumerable<CartItem> Products { get;  private set; }
+        public virtual ICollection<OrderLine> OrderLines { get;  private set; }
         public ShippingDetails ShippingDetails { get; private set; }
 
-        public Order (Cart cart, ShippingDetails shippingDetails)
+        public Order (DateTime creatingDate, ShippingDetails shippingDetails)
         {
-            CreatingDate = DateTime.Now;
-            Products = cart.Items;
+            CreatingDate = creatingDate;           
             ShippingDetails = shippingDetails;
         }
+        private Order() { }
         
     }
 }
