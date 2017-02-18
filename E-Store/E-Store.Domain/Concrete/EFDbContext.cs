@@ -10,6 +10,7 @@ namespace E_Store.Domain.Concrete
 {
     public class EFDbContext:DbContext
     {
+        public EFDbContext() : base("EStoreDB") { }
         public DbSet<Customer> Customers { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<Order> Orders { get; set; }
@@ -19,5 +20,7 @@ namespace E_Store.Domain.Concrete
         {
 
         }
+
+       
     }
 }

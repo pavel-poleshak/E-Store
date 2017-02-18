@@ -26,13 +26,14 @@ namespace E_Store.Domain.Concrete
 
         }
 
-        public void Delete(int id)
+        public Customer Delete(int id)
         {
             Customer customer = context.Customers.Find(id);
             if (customer!=null)
             {
                 context.Customers.Remove(customer);
             }
+            return customer;
         }
 
         public IQueryable<Customer> Find(Func<Customer, bool> predicate)

@@ -26,13 +26,14 @@ namespace E_Store.Domain.Concrete
             }            
         }
 
-        public void Delete(int id)
+        public Order Delete(int id)
         {
             Order order = context.Orders.Find(id);
             if (order!=null)
             {
                 context.Orders.Remove(order);
             }
+            return order;
         }
 
         public IQueryable<Order> Find(Func<Order, bool> predicate)

@@ -25,13 +25,14 @@ namespace E_Store.Domain.Concrete
             }            
         }
 
-        public void Delete(int id)
+        public Product Delete(int id)
         {
             Product product = context.Products.Find(id);
             if (product!=null)
             {
                 context.Products.Remove(product);
             }
+            return product;
         }
 
         public IQueryable<Product> Find(Func<Product, bool> predicate)
