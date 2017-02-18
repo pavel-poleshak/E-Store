@@ -1,4 +1,5 @@
 ﻿using E_Store.Domain.Entities;
+using E_Store.WebUI.Infrastructure;
 using E_Store.WebUI.Infrastructure.ModelBinders;
 using System;
 using System.Collections.Generic;
@@ -13,6 +14,8 @@ namespace E_Store.WebUI
     {
         protected void Application_Start()
         {
+            AutofacConfig.ConfigrureContainer();
+
             AreaRegistration.RegisterAllAreas();
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             ModelBinders.Binders.Add(typeof(Cart), new CartModelBinder());

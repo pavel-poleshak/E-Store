@@ -29,7 +29,7 @@ namespace E_Store.Domain.Concrete
         {
             get
             {
-                return customerRepository ?? new EFCustomerRepository(context);
+                return customerRepository ?? (customerRepository = new EFCustomerRepository(context));
             }
         }
 
@@ -37,7 +37,7 @@ namespace E_Store.Domain.Concrete
         {
             get
             {
-                return orderLineRepository ?? new EFOrderLineRepository(context);
+                return orderLineRepository ?? (orderLineRepository = new EFOrderLineRepository(context));
             }
         }
 
@@ -45,7 +45,7 @@ namespace E_Store.Domain.Concrete
         {
             get
             {
-                return orderRepository ?? new EFOrderRepository(context);
+                return orderRepository ?? (orderRepository=new EFOrderRepository(context));
             }
         }
 
@@ -53,7 +53,7 @@ namespace E_Store.Domain.Concrete
         {
             get
             {
-                return productRepository ?? new EFProductRepository(context);
+                return productRepository ?? (productRepository = new EFProductRepository(context));
             }
         }
 
