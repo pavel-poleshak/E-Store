@@ -9,7 +9,8 @@ namespace E_Store.Domain.Abstract
 {
     public interface IOrderProcessor
     {
-        void ProcessOrder(Cart cart, ShippingDetails shippingDetails);
+        bool Processed { get; }
+        void ProcessOrder(Cart cart, Customer customer, ShippingDetails shippingDetails);
         
     }
 }

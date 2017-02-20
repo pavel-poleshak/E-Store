@@ -5,11 +5,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using E_Store.Domain.Entities;
+using System.Diagnostics;
 
 namespace E_Store.Domain.Concrete
 {
     public class EFUnitOfWork : IUnitOfWork
-    {
+    {       
         private EFDbContext context;
         private EFCustomerRepository customerRepository;
         private EFProductRepository productRepository;
