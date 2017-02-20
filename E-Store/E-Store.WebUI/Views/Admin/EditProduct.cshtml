@@ -7,25 +7,17 @@
 
 
 <div class="panel">
-    <div class="panel-heading">
-        @if (Model.Name != null)
-        {
+    <div class="panel-heading"> 
             <h2>Редактирование товара «@Model.Name»</h2>
-        }
-        else
-        {
-            <h2>Добавление товара</h2>
-        }
-
     </div>
 
-    @using (Html.BeginForm("Edit", "Admin"))
+    @using (Html.BeginForm("EditProduct", "Admin"))
     {
         <div class="panel-body">
             @Html.HiddenFor(m => m.ProductId)
             @foreach (var property in ViewData.ModelMetadata.Properties)
             {
-                if (property.PropertyName != "ProductId")
+                if (property.PropertyName != "ProductId" && property.PropertyName!="OrderLines")
                 {
                     <div class="form-group">
                         <label>@(property.DisplayName ?? property.PropertyName)</label>

@@ -1,22 +1,21 @@
-﻿@model E_Store.Domain.Entities.Product
+﻿@model E_Store.Domain.Entities.Customer
 
 @{
-    ViewBag.Title = "Добавление товара";
+    ViewBag.Title = "CreateCustomer";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
-
 <div class="panel">
     <div class="panel-heading">
-            <h2>Добавление товара</h2> 
+        <h2>Добавление пользователя</h2>
     </div>
 
-    @using (Html.BeginForm("Create", "Admin"))
+    @using (Html.BeginForm("CreateCustomer", "Admin"))
     {
-        <div class="panel-body">          
+        <div class="panel-body">
             @foreach (var property in ViewData.ModelMetadata.Properties)
             {
-                if (property.PropertyName != "ProductId" || property.PropertyName!="OrderLines")
+                if (property.PropertyName != "CustomerId" && property.PropertyName != "Orders" && property.PropertyName!="CreatingDate")
                 {
                     <div class="form-group">
                         <label>@(property.DisplayName ?? property.PropertyName)</label>
@@ -44,3 +43,4 @@
         </div>
     }
 </div>
+
