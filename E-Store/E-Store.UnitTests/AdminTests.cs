@@ -52,8 +52,8 @@ namespace E_Store.UnitTests
             AdminController controller = new AdminController(mock.Object);
 
             // Act
-            Product p1 = (Product)controller.Edit(2).ViewData.Model;
-            Product p2 = (Product)controller.Edit(3).ViewData.Model;
+            Product p1 = (Product)controller.EditProduct(2).ViewData.Model;
+            Product p2 = (Product)controller.EditProduct(3).ViewData.Model;
 
             // Assert
             Assert.AreEqual(p1.ProductId, 2);
@@ -76,7 +76,7 @@ namespace E_Store.UnitTests
 
             //Act
 
-            Product result = (Product)controller.Edit(6).Model;
+            Product result = (Product)controller.EditProduct(6).Model;
 
             // Assert
 
@@ -93,7 +93,7 @@ namespace E_Store.UnitTests
             Product p1 = new Product() { ProductId = 1 };
 
             // Act
-            ActionResult result = controller.Edit(p1);
+            ActionResult result = controller.EditProduct(p1);
 
             // Assert
             mock.Verify(m => m.Products.Update(p1));
@@ -110,7 +110,7 @@ namespace E_Store.UnitTests
             controller.ModelState.AddModelError("Test Error", "Error");
 
             // Act
-            ActionResult result = controller.Edit(p1);
+            ActionResult result = controller.EditProduct(p1);
 
             // Assert
             mock.Verify(m => m.Products.Update(It.IsAny<Product>()), Times.Never());
@@ -134,7 +134,7 @@ namespace E_Store.UnitTests
             AdminController controller = new AdminController(mock.Object);
 
             // Act
-            controller.Delete(product.ProductId);
+            controller.DeleteProduct(product.ProductId);
 
             // Assert
             mock.Verify(m => m.Products.Delete(product.ProductId));

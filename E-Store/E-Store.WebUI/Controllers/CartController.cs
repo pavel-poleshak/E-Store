@@ -3,6 +3,9 @@ using E_Store.Domain.Entities;
 using E_Store.WebUI.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
+using System.Data.Entity.Validation;
+using System.Diagnostics;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -15,9 +18,12 @@ namespace E_Store.WebUI.Controllers
         IOrderProcessor orderProcessor;
 
 
-        public CartController(IUnitOfWork repo)
+        public CartController(IUnitOfWork repo, IOrderProcessor orderProcessor)
         {
-            repository = repo;            
+            repository = repo;
+            this.orderProcessor = orderProcessor;
+            
+                        
         }
         // GET: Cart
         public ViewResult Index(Cart cart, string returnUrl)
@@ -56,18 +62,22 @@ namespace E_Store.WebUI.Controllers
             return PartialView(cart);
         }
 
-        public ViewResult Checkout(ShippingDetails shippingDetails)
+        public ViewResult Checkout()
         {
-            return View(new ShippingDetails());
+            return View(new CheckoutViewModel());
         }
 
         [HttpPost]
-        public ViewResult Checkout(Cart cart, ShippingDetails shippingDetails)
+        public ActionResult Checkout(Cart cart, CheckoutViewModel checkOutViewModel)
         {
+            orderProcessor.ProcessOrder(cart,checkOutViewModel.Customer, checkOutViewModel.ShippingDetails);
+            if (!orderProcessor.Processed)
+            {
+                return View();
+            }
+            TempData["message"] = "Заказ успешно оформлен";
+            return RedirectToAction("List", "Product");           
             
-            orderProcessor.ProcessOrder(cart, shippingDetails);
-            TempData["message"] = "Заказ успешно оформлен";          
-            return View();
         }
     }
 }

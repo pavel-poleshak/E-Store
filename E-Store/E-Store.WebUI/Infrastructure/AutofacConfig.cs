@@ -2,6 +2,7 @@
 using Autofac.Integration.Mvc;
 using E_Store.Domain.Abstract;
 using E_Store.Domain.Concrete;
+using E_Store.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,7 +17,8 @@ namespace E_Store.WebUI.Infrastructure
         {
             var builder = new ContainerBuilder();
             builder.RegisterControllers(typeof(MvcApplication).Assembly);
-            builder.RegisterType<EFUnitOfWork>().As<IUnitOfWork>();
+            builder.RegisterType<EFUnitOfWork>().As<IUnitOfWork>().SingleInstance();
+            builder.RegisterType<OrderProcessor>().As<IOrderProcessor>();
             var container = builder.Build();
             DependencyResolver.SetResolver(new AutofacDependencyResolver(container));
         }

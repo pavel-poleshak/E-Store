@@ -23,14 +23,14 @@ namespace E_Store.WebUI.Controllers
             return View(repository.Products.GetAll());
         }
 
-        public ViewResult Edit(int productId)
+        public ViewResult EditProduct(int productId)
         {
             Product product = repository.Products.GetAll().FirstOrDefault(p => p.ProductId == productId);
             return View(product);
         }
 
         [HttpPost]
-        public ActionResult Edit(Product product)
+        public ActionResult EditProduct(Product product)
         {
             if (ModelState.IsValid)
             {
@@ -46,13 +46,13 @@ namespace E_Store.WebUI.Controllers
         }
 
         [HttpGet]
-        public ViewResult Create()
+        public ViewResult CreateProduct()
         {
             return View(new Product());
         }
 
         [HttpPost]
-        public ActionResult Create(Product product)
+        public ActionResult CreateProduct(Product product)
         {
             if (ModelState.IsValid)
             {
@@ -69,7 +69,7 @@ namespace E_Store.WebUI.Controllers
         }
 
         [HttpPost]
-        public ActionResult Delete(int productId)
+        public ActionResult DeleteProduct(int productId)
         {
             Product deletedProduct = repository.Products.Delete(productId);
             repository.Save();
@@ -78,6 +78,35 @@ namespace E_Store.WebUI.Controllers
                 TempData["message"] = string.Format("Товар \"{0}\" был удален", deletedProduct.Name);
             }
             return RedirectToAction("Index");
+        }
+
+        public ActionResult ViewCustomers()
+        {
+            return View(repository.Customers.GetAll());
+        }
+
+        [HttpGet]
+        public ViewResult CreateCustomer()
+        {
+            return View(new Customer());
+        }
+
+        [HttpPost]
+        public ActionResult CreateCustomer(Customer customer)
+        {
+            if (ModelState.IsValid)
+            {
+                customer.CreatingDate = DateTime.Now;
+                repository.Customers.Create(customer);
+                repository.Save();
+                TempData["message"] = string.Format("Пользователь {0} были успешно добавлен.", customer.Name);
+                return RedirectToAction("ViewCustomers");
+            }
+            else
+            {
+                return View();
+            }
+
         }
     }
 }
