@@ -53,6 +53,9 @@ namespace E_Store.Domain.Concrete
 
         public void Update(Customer item)
         {
+            Customer customer = context.Customers.FirstOrDefault(c => c.CustomerId == item.CustomerId);
+            customer.Name = item.Name;
+            customer.Email = item.Email;
             context.Entry(item).State = EntityState.Modified;
         }
     }

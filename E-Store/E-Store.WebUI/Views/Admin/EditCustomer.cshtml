@@ -1,0 +1,41 @@
+﻿@model E_Store.Domain.Entities.Customer
+
+@{
+    ViewBag.Title = "EditCustomer";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+<div class="panel">
+    <div class="panel-heading">
+        <h2>Редактирование информации покупателя «@Model.Name»</h2>
+    </div>
+
+    @using (Html.BeginForm("EditCustomer", "Admin"))
+    {
+        <div class="panel-body">
+            @Html.HiddenFor(m => m.CustomerId)
+            @Html.HiddenFor(m => m.CreatingDate)
+
+            <div class="form-group">
+                <label>@Html.LabelFor(m => m.Name)</label>
+                @Html.TextBoxFor(m => m.Name, null, new { @class = "form-control" })
+                @Html.ValidationMessage(Model.Name)
+            </div>
+            <div class="form-group">
+                <label>@Html.LabelFor(m => m.Email)</label>
+                @Html.TextBoxFor(m => m.Email, null, new { @class = "form-control" })
+                @Html.ValidationMessage(Model.Email)
+            </div>
+
+
+        </div>
+        <div class="panel-footer">
+            <input type="submit" value="Сохранить" class="btn btn-primary" />
+            @Html.ActionLink("Отменить изменения и вернуться к списку", "ViewCustomers", null, new
+       {
+           @class = "btn btn-default"
+       })
+        </div>
+    }
+</div>

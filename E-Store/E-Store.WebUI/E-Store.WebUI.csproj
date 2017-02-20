@@ -181,6 +181,8 @@
     <Content Include="Views\Admin\CreateProduct.cshtml" />
     <Content Include="Views\Admin\ViewCustomers.cshtml" />
     <Content Include="Views\Admin\CreateCustomer.cshtml" />
+    <Content Include="Views\Admin\EditCustomer.cshtml" />
+    <Content Include="Views\Admin\ViewOrders.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

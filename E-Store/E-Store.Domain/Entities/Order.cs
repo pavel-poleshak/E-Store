@@ -10,6 +10,7 @@ namespace E_Store.Domain.Entities
     {
         public int OrderId { get; set; }
         public DateTime CreatingDate { get; set; }
+        public virtual Customer Customer { get; set; }
         public virtual ICollection<OrderLine> OrderLines { get; set; }
         public ShippingDetails ShippingDetails { get; set; }
 

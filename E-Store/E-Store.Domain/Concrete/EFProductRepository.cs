@@ -52,7 +52,12 @@ namespace E_Store.Domain.Concrete
 
         public void Update(Product item)
         {
-           context.Entry(item).State=EntityState.Modified;
+            Product productToUpdate = context.Products.FirstOrDefault(p => p.ProductId == item.ProductId);
+            productToUpdate.Name = item.Name;
+            productToUpdate.Description = item.Description;
+            productToUpdate.Price = item.Price;
+            productToUpdate.Category = item.Category;
+            context.Entry(productToUpdate).State=EntityState.Modified;
         }
     }
 }
