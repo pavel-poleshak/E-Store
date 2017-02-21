@@ -2,6 +2,7 @@
 using E_Store.Domain.Entities;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -72,9 +73,10 @@ namespace E_Store.WebUI.Controllers
         public ActionResult DeleteProduct(int productId)
         {
             Product deletedProduct = repository.Products.Delete(productId);
-            repository.Save();
+            
             if (deletedProduct!=null)
             {
+                repository.Save();
                 TempData["message"] = string.Format("Товар \"{0}\" был удален", deletedProduct.Name);
             }
             return RedirectToAction("Index");
@@ -106,6 +108,64 @@ namespace E_Store.WebUI.Controllers
             {
                 return View();
             }
+
+        }
+
+        [HttpGet]
+        public ViewResult EditCustomer(int customerId)
+        {
+            Customer customer = repository.Customers.Get(customerId);
+            return View(customer);
+        }
+
+        [HttpPost]
+        public ActionResult EditCustomer(Customer customer)
+        {
+            if (ModelState.IsValid)
+            {
+                repository.Customers.Update(customer);
+                repository.Save();
+                TempData["message"] = string.Format("Изменение к покупателю {0} были успешно применены.", customer.Name);
+                return RedirectToAction("ViewCustomers");
+            }
+            else
+            {
+                return View(customer);
+            }
+        }
+
+        [HttpPost]
+        public ActionResult DeleteCustomer(int customerId)
+        {
+           Customer deletedCustomer = repository.Customers.Delete(customerId);
+
+            if (deletedCustomer != null)
+            {
+                repository.Save();
+                TempData["message"] = string.Format("Покупатель \"{0}\" был удален", deletedCustomer.Name);
+            }
+            return RedirectToAction("ViewCustomers");
+        }
+
+        [HttpGet]
+        public ViewResult ViewOrders()
+        {
+            var orders = (from order in repository.Orders.GetAll()
+                          select order).Include(order => order.Customer); 
+            return View(orders.ToList());
+        }
+
+        [HttpPost]
+        public ActionResult DeleteOrder(int orderId)
+        {
+            Order deletedOrder = repository.Orders.Delete(orderId);
+
+            if (deletedOrder != null)
+            {
+                repository.Save();
+                TempData["message"] = string.Format("Заказ \"{0}\" был удален", deletedOrder.OrderId);
+            }
+            return RedirectToAction("ViewOrders");
 
         }
     }
