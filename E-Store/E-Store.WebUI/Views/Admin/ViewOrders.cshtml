@@ -1,0 +1,47 @@
+﻿@model IEnumerable<E_Store.Domain.Entities.Order>
+
+@{
+    ViewBag.Title = "ViewOrders";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3>Список Заказов</h3>
+    </div>
+    <div class="panel-body">
+        <table class="table table-striped table-condensed table-bordered">
+            <tr>
+                <th class="text-center">ID</th>
+                <th>Дата создания</th>
+                <th>Заказчик</th>
+                <th class="text-right">Адрес</th>
+                <th class="text-right">Город</th>
+                <th class="text-right">Страна</th>
+                <th class="text-center">Операции</th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td class="text-right">@item.OrderId</td>
+                    <td class="text-right">@item.CreatingDate.ToLongDateString()</td>
+                    <td class="text-right">@item.Customer.Name</td>
+                    <td class="text-right">@item.ShippingDetails.Street</td>
+                    <td class="text-right">@item.ShippingDetails.City</td>
+                    <td class="text-right">@item.ShippingDetails.Country</td>
+                    <td class="text-center">
+                        @using (Html.BeginForm("DeleteOrder", "Admin"))
+                        {
+                            @Html.Hidden("OrderId", item.OrderId)
+                            <input type="submit" class="btn btn-default btn-xs" value="Удалить" />
+
+                        }
+                    </td>
+                </tr>
+            }
+
+        </table>
+    </div>    
+</div>
+
