@@ -134,7 +134,7 @@ namespace E_Store.UnitTests
             }.AsQueryable());
 
             Cart cart = new Cart();
-            CartController controller = new CartController(mock.Object);
+            CartController controller = new CartController(mock.Object,null);
 
             // Act
             controller.AddToCart(cart, 1, null);
@@ -157,7 +157,7 @@ namespace E_Store.UnitTests
             }.AsQueryable());
 
             Cart cart = new Cart();
-            CartController controller = new CartController(mock.Object);
+            CartController controller = new CartController(mock.Object, null);
 
             // Act
             RedirectToRouteResult result = controller.AddToCart(cart, 1, "testUrl");
@@ -172,7 +172,7 @@ namespace E_Store.UnitTests
         {
             // Arrange
             Cart cart = new Cart();
-            CartController controller = new CartController(null);
+            CartController controller = new CartController(null, null);
 
             // Act
             CartIndexViewModel result = (CartIndexViewModel)controller.Index(cart, "testUrl").Model;
@@ -182,7 +182,53 @@ namespace E_Store.UnitTests
             Assert.AreEqual(result.ReturnUrl, "testUrl");
         }
 
-        
+        [TestMethod]
+        public void Can_View_CheckoutContent()
+        {
+            // Arrange            
+            CartController controller = new CartController(null, null);
+
+            // Act
+            CheckoutViewModel model = (CheckoutViewModel)controller.Checkout().Model;
+
+            // Arrange
+            Assert.AreEqual(model.Customer, null);
+            Assert.AreEqual(model.ShippingDetails, null);
+        }
+
+        [TestMethod]
+        public void Can_Add_Order_To_Db()
+        {
+            // Arrange
+            Mock<IUnitOfWork> mockDb = new Mock<IUnitOfWork>();
+            mockDb.Setup(m => m.Customers.GetAll()).Returns(new List<Customer>().AsQueryable());
+            mockDb.Setup(m => m.OrderLines.GetAll()).Returns(new List<OrderLine>().AsQueryable());
+
+            OrderProcessor orderProcessor = new OrderProcessor(mockDb.Object);  
+            Cart cart = new Cart();
+            cart.AddItem(new Product(), 1);
+            CheckoutViewModel checkoutModel = new CheckoutViewModel()
+            {
+                Customer = new Customer(),
+                ShippingDetails = new ShippingDetails()
+            }; 
+            CartController controller = new CartController(mockDb.Object, orderProcessor);
+
+
+            // Act
+            controller.Checkout(cart, checkoutModel);
+
+
+            // Assert
+            mockDb.Verify(m => m.Customers.Create(It.IsAny<Customer>()));
+            mockDb.Verify(m => m.OrderLines.Create(It.IsAny<OrderLine>()));
+            mockDb.Verify(m => m.Save());
+
+
+
+        }
+
+
 
 
 
