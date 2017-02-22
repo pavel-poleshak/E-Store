@@ -8,7 +8,12 @@
 <div>
     <h2>Ваша корзина</h2>
 </div>
-
+@if (Model.Cart.Items.Count() == 0)
+{
+    <h3>Корзина пуста</h3>
+}
+else
+{
     <div>
         <table class="table">
             <thead>
@@ -32,7 +37,7 @@
                             @using (Html.BeginForm("RemoveFromCart", "Cart"))
                             {
                                 @Html.Hidden("productId", item.Product.ProductId)
-                                @Html.HiddenFor(m=>m.ReturnUrl)
+                                @Html.HiddenFor(m => m.ReturnUrl)
                                 <input class="btn btn-sm btn-danger" type="submit" value="Удалить" />
                             }
                         </td>
@@ -48,7 +53,20 @@
             </tfoot>
         </table>
     </div>
-    <div class="text-center">
-        <a class="btn btn-primary btn-lg" href="@Model.ReturnUrl">Продолжить покупки</a>
-        @Html.ActionLink("Оформить заказ", "Checkout", null, new { @class = "btn btn-primary btn-lg" })
-    </div>
+}
+<div class="text-center">
+    <a class="btn btn-primary btn-lg" href="@Model.ReturnUrl">Продолжить покупки</a>
+
+
+    @{
+        if (Model.Cart.Items.Count() > 0)
+        {
+            @Html.ActionLink("Оформить заказ", "Checkout", null, new { @class = "btn btn-primary btn-lg" });            
+
+        }
+    }
+
+
+
+
+</div>

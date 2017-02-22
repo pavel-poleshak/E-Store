@@ -1,4 +1,5 @@
-﻿@model IEnumerable<E_Store.Domain.Entities.Order>
+﻿@using E_Store.WebUI.Models
+@model IEnumerable<E_Store.Domain.Entities.Order>
 
 @{
     ViewBag.Title = "ViewOrders";
@@ -15,6 +16,7 @@
                 <th class="text-center">ID</th>
                 <th>Дата создания</th>
                 <th>Заказчик</th>
+                <th>Товары</th>
                 <th class="text-right">Адрес</th>
                 <th class="text-right">Город</th>
                 <th class="text-right">Страна</th>
@@ -22,15 +24,19 @@
             </tr>
 
             @foreach (var item in Model)
-            {
-                <tr>
+            {                
+              
+                <tr>                    
                     <td class="text-right">@item.OrderId</td>
                     <td class="text-right">@item.CreatingDate.ToLongDateString()</td>
                     <td class="text-right">@item.Customer.Name</td>
+                    <td class="text-center">
+                        @Ajax.ActionLink("Товары", "GetOrdersProducts", new { orderId=item.OrderId }, new AjaxOptions { UpdateTargetId="test", OnSuccess="ShowModal()" }, new { @class = "btn btn-default btn-xs" })
+                    </td>
                     <td class="text-right">@item.ShippingDetails.Street</td>
                     <td class="text-right">@item.ShippingDetails.City</td>
                     <td class="text-right">@item.ShippingDetails.Country</td>
-                    <td class="text-center">
+                    <td class="text-center">                        
                         @using (Html.BeginForm("DeleteOrder", "Admin"))
                         {
                             @Html.Hidden("OrderId", item.OrderId)
@@ -38,10 +44,15 @@
 
                         }
                     </td>
-                </tr>
+                </tr>                   
             }
 
         </table>
     </div>    
 </div>
+
+<div id="test">some info</div>
+
+
+
 

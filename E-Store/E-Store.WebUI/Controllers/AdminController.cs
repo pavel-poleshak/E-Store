@@ -1,5 +1,6 @@
 ﻿using E_Store.Domain.Abstract;
 using E_Store.Domain.Entities;
+using E_Store.WebUI.Models;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -166,7 +167,20 @@ namespace E_Store.WebUI.Controllers
                 TempData["message"] = string.Format("Заказ \"{0}\" был удален", deletedOrder.OrderId);
             }
             return RedirectToAction("ViewOrders");
-
+        }
+        [HttpGet]
+        public ActionResult GetOrdersProducts(int orderId)
+        {  
+            var query = from order in repository.Orders.GetAll()
+                        where order.OrderId==orderId
+                        from orderLine in order.OrderLines
+                        select new OrdersProductsViewModel
+                        {
+                            Product = orderLine.Product,
+                            Quantity = orderLine.Quantity
+                        };
+            
+            return PartialView("OrderDetails", query.ToList());
         }
     }
 }
