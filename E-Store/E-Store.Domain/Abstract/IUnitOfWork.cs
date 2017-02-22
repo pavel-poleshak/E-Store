@@ -11,6 +11,8 @@ namespace E_Store.Domain.Abstract
     {
         IRepository<Customer> Customers { get; }
         IRepository<Product> Products { get; }
+        IRepository<Category> Categories { get; }
+        IRepository<SubCategory> SubCategories { get; }
         IRepository<Order> Orders { get; }
         IOrderLineRepository OrderLines { get; }
         void Save();

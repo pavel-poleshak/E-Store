@@ -56,7 +56,7 @@ namespace E_Store.Domain.Concrete
             productToUpdate.Name = item.Name;
             productToUpdate.Description = item.Description;
             productToUpdate.Price = item.Price;
-            productToUpdate.Category = item.Category;
+            productToUpdate.SubCategory = item.SubCategory;
             context.Entry(productToUpdate).State=EntityState.Modified;
         }
     }

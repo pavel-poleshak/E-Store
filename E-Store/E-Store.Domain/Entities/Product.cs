@@ -26,7 +26,7 @@ namespace E_Store.Domain.Entities
 
         [Display(Name ="Категория")]
         [Required(ErrorMessage = "Пожалуйста, введите категорию товара")]
-        public string Category { get; set; }
+        public SubCategory SubCategory { get; set; }
 
         public virtual ICollection<OrderLine> OrderLines { get; set; }
     }

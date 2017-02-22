@@ -81,20 +81,25 @@
     <Compile Include="Abstract\IOrderProcessor.cs" />
     <Compile Include="Abstract\IRepository.cs" />
     <Compile Include="Abstract\IUnitOfWork.cs" />
+    <Compile Include="Concrete\EFCategoryRepository.cs" />
     <Compile Include="Concrete\EFCustomerRepository.cs" />
     <Compile Include="Concrete\EFOrderLineRepository.cs" />
     <Compile Include="Concrete\EFOrderRepository.cs" />
     <Compile Include="Concrete\EFDbContext.cs" />
     <Compile Include="Concrete\EFProductRepository.cs" />
+    <Compile Include="Concrete\EFSubCategoriesRepository.cs" />
     <Compile Include="Concrete\EFUnitOfWork.cs" />
+    <Compile Include="Entities\BaseCategory.cs" />
     <Compile Include="Entities\Cart.cs" />
     <Compile Include="Entities\CartItem.cs" />
+    <Compile Include="Entities\Category.cs" />
     <Compile Include="Entities\Customer.cs" />
     <Compile Include="Entities\Order.cs" />
     <Compile Include="Entities\OrderLine.cs" />
     <Compile Include="Entities\OrderProcessor.cs" />
     <Compile Include="Entities\Product.cs" />
     <Compile Include="Entities\ShippingDetails.cs" />
+    <Compile Include="Entities\SubCategory.cs" />
     <Compile Include="Migrations\201702191306491_A1.cs" />
     <Compile Include="Migrations\201702191306491_A1.Designer.cs">
       <DependentUpon>201702191306491_A1.cs</DependentUpon>
@@ -102,6 +107,14 @@
     <Compile Include="Migrations\201702201306341_A2.cs" />
     <Compile Include="Migrations\201702201306341_A2.Designer.cs">
       <DependentUpon>201702201306341_A2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201702221113193_A3.cs" />
+    <Compile Include="Migrations\201702221113193_A3.Designer.cs">
+      <DependentUpon>201702221113193_A3.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201702221147157_A31.cs" />
+    <Compile Include="Migrations\201702221147157_A31.Designer.cs">
+      <DependentUpon>201702221147157_A31.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -116,6 +129,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201702201306341_A2.resx">
       <DependentUpon>201702201306341_A2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201702221113193_A3.resx">
+      <DependentUpon>201702221113193_A3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201702221147157_A31.resx">
+      <DependentUpon>201702221147157_A31.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

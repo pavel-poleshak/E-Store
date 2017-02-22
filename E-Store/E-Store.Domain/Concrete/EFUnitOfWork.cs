@@ -14,6 +14,8 @@ namespace E_Store.Domain.Concrete
         private EFDbContext context;
         private EFCustomerRepository customerRepository;
         private EFProductRepository productRepository;
+        private EFCategoryRepository categoryRepository;
+        private EFSubCategoriesRepository subCategoryRepository;
         private EFOrderRepository orderRepository;
         private EFOrderLineRepository orderLineRepository;
 
@@ -55,6 +57,22 @@ namespace E_Store.Domain.Concrete
             get
             {
                 return productRepository ?? (productRepository = new EFProductRepository(context));
+            }
+        }
+
+        public IRepository<Category> Categories
+        {
+            get
+            {
+                return categoryRepository ?? (categoryRepository = new EFCategoryRepository(context));
+            }
+        }
+
+        public IRepository<SubCategory> SubCategories
+        {
+            get
+            {
+                return subCategoryRepository ?? (subCategoryRepository = new EFSubCategoriesRepository(context));
             }
         }
 
