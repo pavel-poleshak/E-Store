@@ -50,8 +50,10 @@ namespace E_Store.Domain.Concrete
 
         public void Update(Category item)
         {
-            // Category category = context.Categories.FirstOrDefault(c => c.Id == item.Id);
-            context.Entry(item).State = System.Data.Entity.EntityState.Modified;
+            Category category = context.Categories.FirstOrDefault(c => c.Id == item.Id);
+            category.Name = item.Name;
+            category.Description = item.Description;            
+            context.Entry(category).State = System.Data.Entity.EntityState.Modified;
 
         }
     }
