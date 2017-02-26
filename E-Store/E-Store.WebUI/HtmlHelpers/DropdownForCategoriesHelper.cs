@@ -11,7 +11,7 @@ namespace E_Store.WebUI.HtmlHelpers
 {
     public static class DropdownForCategoriesHelper
     {
-        public static MvcHtmlString CreateDropdownForProductCategories(this HtmlHelper htmlHelper, IEnumerable<SubCategoryDTO> listSubCategories)
+        public static MvcHtmlString CreateDropdownForProductCategories(this HtmlHelper htmlHelper, IEnumerable<SubCategoryDTO> listSubCategories, string tagName, int? currentVal=null)
         {
             StringBuilder result = new StringBuilder();
             TagBuilder select = new TagBuilder("select");
@@ -30,6 +30,8 @@ namespace E_Store.WebUI.HtmlHelpers
                 select.InnerHtml += optGroup;                
             }
             select.AddCssClass("selectpicker show-tick");
+            select.MergeAttribute("name", tagName);
+            select.MergeAttribute("id", tagName);
             select.MergeAttribute("data-live-search", "true");
             select.MergeAttribute("data-header", "Выберите категорию");
             select.MergeAttribute("data-size", "8");

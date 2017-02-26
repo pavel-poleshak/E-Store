@@ -1,50 +1,57 @@
-﻿@model E_Store.Domain.Entities.Product
+﻿@using E_Store.WebUI.HtmlHelpers
+@using E_Store.WebUI.Models
+@model E_Store.Domain.Entities.Product
 
 @{
     ViewBag.Title = "Редактирование товара";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    List<SubCategoryDTO> listCategories = ViewBag.SubCategories;
+    
 }
 
 
 <div class="panel">
-    <div class="panel-heading"> 
-            <h2>Редактирование товара «@Model.Name»</h2>
+    <div class="panel-heading">
+        <h2>Редактирование товара «@Model.Name»</h2>
     </div>
 
     @using (Html.BeginForm("EditProduct", "Admin"))
     {
         <div class="panel-body">
-            @Html.HiddenFor(m => m.ProductId)            
-            @foreach (var property in ViewData.ModelMetadata.Properties)
-            {
-                if (property.PropertyName != "ProductId" && property.PropertyName!="OrderLines")
-                {
-                    <div class="form-group">
-                        <label>@(property.DisplayName ?? property.PropertyName)</label>
-                        @if (property.PropertyName == "Description")
-                        {
-                            @Html.TextArea(property.PropertyName, null,
-                                new { @class = "form-control", rows = 5 })
-                        }
-                        else
-                        {
-                            @Html.TextBox(property.PropertyName, null,
-                                new { @class = "form-control" })
-                        }
-                        @Html.ValidationMessage(property.PropertyName)
-                    </div>
-                }
-            }
+            @Html.HiddenFor(m => m.ProductId)
+            <div class="form-group">
+                @Html.LabelFor(m => m.Name)
+                @Html.TextBoxFor(m=>m.Name, new { @class = "form-control" })
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m=>m.Description)
+                @Html.TextAreaFor(m=>m.Description, new { @class = "form-control", rows = 5 })
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.Price)
+                @Html.TextBoxFor(m=>m.Price, new { @class = "form-control", @value=string.Format("{0:C}", Model.Price) })
+                @Html.ValidationMessageFor(m=>m.Price)
+                
+            </div>           
+            <div class="form-group">
+                <label>Категория</label> <br />
+                @Html.CreateDropdownForProductCategories(listCategories, "SubCategoryId")
+            </div>
         </div>
-        <div class="panel-footer">
-            <input type="submit" value="Сохранить" class="btn btn-primary" />
-            @Html.ActionLink("Отменить изменения и вернуться к списку", "Index", null, new
-       {
-           @class = "btn btn-default"
-       })
-        </div>
+                <div class="panel-footer">
+                    <input type="submit" value="Сохранить" class="btn btn-primary" />
+                    @Html.ActionLink("Отменить изменения и вернуться к списку", "Index", null, new
+           {
+               @class = "btn btn-default"
+           })
+                </div>
     }
 </div>
-
-
+    
+@section scripts{
+<script type="text/javascript">
+    $(".selectpicker").val("@Model.SubCategoryId");
+    $(".selectpicker").selectpicker("refresh");
+</script>
+    }
 

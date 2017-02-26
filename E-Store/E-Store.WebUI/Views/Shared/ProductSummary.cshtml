@@ -11,9 +11,8 @@
             @Html.HiddenFor(p => p.ProductId);
             @Html.Hidden("returnUrl", Request.Url.PathAndQuery);
             <input type="submit" class="btn btn-success btn-sm"  value="Добавить в корзину"/>
-
-
         }
     </div>
+    <h5><span class="pull-left label label-info">@Model.SubCategory.Name</span></h5>
 </div>
 

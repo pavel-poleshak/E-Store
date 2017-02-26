@@ -130,7 +130,7 @@ namespace E_Store.UnitTests
             Mock<IUnitOfWork> mock = new Mock<IUnitOfWork>();
             mock.Setup(p => p.Products.GetAll()).Returns(new List<Product>()
             {
-                new Product() {ProductId=1, Name="Kaspersky AV", Category="AV", Price=10M }
+                new Product() {ProductId=1, Name="Kaspersky AV", SubCategoryId=1, Price=10M }
             }.AsQueryable());
 
             Cart cart = new Cart();
@@ -153,7 +153,7 @@ namespace E_Store.UnitTests
             Mock<IUnitOfWork> mock = new Mock<IUnitOfWork>();
             mock.Setup(p => p.Products.GetAll()).Returns(new List<Product>()
             {
-                new Product() {ProductId=1, Name="Kaspersky AV", Category="AV", Price=10M }
+                new Product() {ProductId=1, Name="Kaspersky AV", SubCategoryId=1, Price=10M }
             }.AsQueryable());
 
             Cart cart = new Cart();

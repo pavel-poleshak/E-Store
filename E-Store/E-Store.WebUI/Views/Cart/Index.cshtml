@@ -31,8 +31,8 @@ else
                     <tr>
                         <td>@item.Quantity</td>
                         <td>@item.Product.Name</td>
-                        <td>@item.Product.Price.ToString("# BYN")</td>
-                        <td>@((item.Product.Price * item.Quantity).ToString("# BYN"))</td>
+                        <td>@item.Product.Price.ToString("#.00 BYN")</td>
+                        <td>@((item.Product.Price * item.Quantity).ToString("#.00 BYN"))</td>
                         <td>
                             @using (Html.BeginForm("RemoveFromCart", "Cart"))
                             {
@@ -48,7 +48,7 @@ else
             <tfoot>
                 <tr>
                     <td colspan="3">Итого</td>
-                    <td>@Model.Cart.CalculateTotalPrice().ToString("# BYN")</td>
+                    <td>@Model.Cart.CalculateTotalPrice().ToString("#.00 BYN")</td>
                 </tr>
             </tfoot>
         </table>

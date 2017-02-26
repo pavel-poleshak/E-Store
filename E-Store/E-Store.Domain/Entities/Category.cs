@@ -9,5 +9,10 @@ namespace E_Store.Domain.Entities
     public class Category:BaseCategory
     {
         public virtual ICollection<SubCategory> SubCategories { get; set; }
+        public Category()
+        {
+            SubCategories = new List<SubCategory>();
+        }
     }
+
 }

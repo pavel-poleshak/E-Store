@@ -20,11 +20,9 @@ namespace E_Store.WebUI.Controllers
         public PartialViewResult Menu(string category = null)
         {
             //ViewBag.SelectedCategory = category;
-            IEnumerable<string> categories = repository.Products.GetAll()
-                .Select(p => p.Category)
-                .Where(p => p != null && p != "")
-                .Distinct()
-                .OrderBy(x => x);
+            IEnumerable<string> categories = repository.Categories.GetAll()
+                .Select(p=>p.Name)
+                .OrderBy(p=>p);
             MenuItemsViewModel model = new MenuItemsViewModel()
             {
                 Categories = categories,

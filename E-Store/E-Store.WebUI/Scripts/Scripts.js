@@ -1,3 +1,4 @@
-﻿function ShowModal() {
-    $('#myModal').modal('show');
+﻿function ShowExtendedInfoInModal() {
+    
+    $('#extendedInfoModal').modal('show');
 }

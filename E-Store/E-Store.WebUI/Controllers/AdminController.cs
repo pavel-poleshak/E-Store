@@ -4,6 +4,8 @@ using E_Store.WebUI.Models;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Diagnostics;
+using System.Globalization;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -14,26 +16,40 @@ namespace E_Store.WebUI.Controllers
     public class AdminController : Controller
     {
         IUnitOfWork repository;
+        
 
         public AdminController(IUnitOfWork repo)
         {
-            repository = repo;
+            repository = repo;           
         }
         // GET: Admin
         public ViewResult Index()
-        {
-            return View(repository.Products.GetAll());
+        {        
+            return View(repository.Products.GetAll().Include(p=>p.SubCategory));
         }
-
+        
         public ViewResult EditProduct(int productId)
         {
             Product product = repository.Products.GetAll().FirstOrDefault(p => p.ProductId == productId);
-            return View(product);
+            if (product!=null)
+            {
+                List<SubCategoryDTO> listSubCategories = (from category in repository.Categories.GetAll()
+                                                          select new SubCategoryDTO
+                                                          {
+                                                              CategoryName = category.Name,
+                                                              SubCategories = (from subCategory in category.SubCategories
+                                                                               select subCategory).ToList()
+                                                          }).ToList();
+                ViewBag.SubCategories = listSubCategories;
+                return View(product);
+            }
+            return View("Index");
+            
         }
 
         [HttpPost]
         public ActionResult EditProduct(Product product)
-        {
+        {            
             if (ModelState.IsValid)
             {
                 repository.Products.Update(product);
@@ -43,13 +59,22 @@ namespace E_Store.WebUI.Controllers
             }
             else
             {
-                return View(product);
+                return RedirectToAction("EditProduct", product.ProductId);
             }
         }
 
         [HttpGet]
         public ViewResult CreateProduct()
-        {
+        {                       
+            List<SubCategoryDTO> listSubCategories = (from category in repository.Categories.GetAll()
+                                                      select new SubCategoryDTO
+                                                      {
+                                                          CategoryName = category.Name,
+                                                          SubCategories = (from subCategory in category.SubCategories
+                                                                           select subCategory).ToList()
+                                                      }).ToList();
+            ViewBag.SubCategories = listSubCategories;
+
             return View(new Product());
         }
 
@@ -65,7 +90,7 @@ namespace E_Store.WebUI.Controllers
             }
             else
             {
-                return View();              
+                return RedirectToAction("CreateProduct");              
             }
 
         }
@@ -83,7 +108,7 @@ namespace E_Store.WebUI.Controllers
             return RedirectToAction("Index");
         }
 
-        public ActionResult ViewCustomers()
+        public ViewResult ViewCustomers()
         {
             return View(repository.Customers.GetAll());
         }
@@ -182,5 +207,116 @@ namespace E_Store.WebUI.Controllers
             
             return PartialView("OrderDetails", query.ToList());
         }
+
+        [HttpGet]
+        public ViewResult ViewCategories()
+        {
+            return View(repository.Categories.GetAll());
+        }
+
+        [HttpGet]
+        public ViewResult CreateCategory()
+        {
+            return View(new Category());
+        }
+
+        [HttpPost]
+        public ActionResult CreateCategory(Category category)
+        {
+            if (ModelState.IsValid)
+            {
+                Category temp = repository.Categories.Find(c => c.Name == category.Name).FirstOrDefault();
+                if (temp==null)
+                {
+                    repository.Categories.Create(category);
+                    repository.Save();
+                    TempData["message"] = string.Format("Категория {0} была успешно добавлена.", category.Name);
+                    return RedirectToAction("ViewCategories");
+                }
+                else
+                {
+                    TempData["message"] = string.Format("Категория {0} уже существует.", category.Name);
+                    return View(category);
+                } 
+            }
+            else
+            {
+                return View();
+            }
+        }
+
+        [HttpGet]
+        public ViewResult EditCategory(int categoryId)
+        {
+            Category categoryToEdit = repository.Categories.Get(categoryId);
+            return View(categoryToEdit);
+        }
+
+        [HttpPost]
+        public ActionResult EditCategory (Category category)
+        {
+            if (ModelState.IsValid)
+            {
+                repository.Categories.Update(category);
+                repository.Save();
+                TempData["message"] = string.Format("Изменение к категории {0} были успешно применены.", category.Name);
+                return RedirectToAction("ViewCategories");
+            }
+            else
+            {
+                return View(category);
+            }
+        }
+
+
+        [HttpGet]
+        public ActionResult GetSubCategories(int categoryId)
+        {
+            var query = (from category in repository.Categories.GetAll()
+                        where category.Id == categoryId
+                        select new SubCategoryDTO
+                        {
+                            SubCategories = category.SubCategories.ToList(),
+                            CategoryId = category.Id
+                        }).Single();
+          
+            return PartialView("SubCategories", query);
+        }
+
+        [HttpPost]
+        public ActionResult CreateSubCategory(int categoryId, string name, string description)
+        {
+            SubCategory subCategory = new SubCategory() { Name = name, Description = description, Category_Id=categoryId };
+            repository.SubCategories.Create(subCategory);           
+            repository.Save();
+            TempData["messageInSubCategoriesModal"] = string.Format("Подкатегория \"{0}\" была успешно добавлена.", subCategory.Name);
+            return GetSubCategories(categoryId);            
+        }
+
+        [HttpPost]
+        public ActionResult DeleteSubCategory(int subCategoryId, int categoryId)
+        {
+            SubCategory deletedSubCategory = repository.SubCategories.Delete(subCategoryId);
+            if (deletedSubCategory!=null)
+            {
+                repository.Save();
+                TempData["messageInSubCategoriesModal"]= string.Format("Подкатегория {0} была успешно удалена.", deletedSubCategory.Name);
+            }
+            return GetSubCategories(categoryId);
+        }
+
+        [HttpPost]
+        public ActionResult DeleteCategory(int categoryId)
+        {
+            Category categoryToDelete = repository.Categories.Delete(categoryId);
+            if (categoryToDelete!=null)
+            {
+                repository.Save();
+                TempData["message"] = string.Format("Категория {0} была успешно удалена.", categoryToDelete.Name);
+            }
+            return RedirectToAction("ViewCategories");
+        }
+
+
     }
 }

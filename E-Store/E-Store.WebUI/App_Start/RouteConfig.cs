@@ -32,8 +32,19 @@ namespace E_Store.WebUI
             );
 
             routes.MapRoute(null,
-                "{category}",
-                new { controller = "Product", action = "List", page = 1 }
+               "admin/{action}",
+               new { controller = "Admin", action = "index" }
+           );
+
+            routes.MapRoute(null,
+              "cart/{action}",
+              new { controller = "Cart", action = "index" }
+          );
+
+
+            routes.MapRoute(null,
+                "{category}/{subCategory}",
+                new { controller = "Product", action = "List", page = 1, subCategory=(string)null }
             );
 
             routes.MapRoute(null,
@@ -46,6 +57,7 @@ namespace E_Store.WebUI
                 new {controller="Admin" },
                 new { productId = @"\d+" }
                 );
+            
             routes.MapRoute(null, "{controller}/{action}");
             //routes.MapRoute(
             //    name: "Default",

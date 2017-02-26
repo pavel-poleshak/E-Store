@@ -31,7 +31,7 @@
                     <td class="text-right">@item.CreatingDate.ToLongDateString()</td>
                     <td class="text-right">@item.Customer.Name</td>
                     <td class="text-center">
-                        @Ajax.ActionLink("Товары", "GetOrdersProducts", new { orderId=item.OrderId }, new AjaxOptions { UpdateTargetId="test", OnSuccess="ShowModal()" }, new { @class = "btn btn-default btn-xs" })
+                        @Ajax.ActionLink("Товары", "GetOrdersProducts", new { orderId=item.OrderId }, new AjaxOptions { LoadingElementId = "loader", UpdateTargetId = "modal-content", OnSuccess = "ShowExtendedInfoInModal()" }, new { @class = "btn btn-default btn-xs" })
                     </td>
                     <td class="text-right">@item.ShippingDetails.Street</td>
                     <td class="text-right">@item.ShippingDetails.City</td>
@@ -50,9 +50,3 @@
         </table>
     </div>    
 </div>
-
-<div id="test">some info</div>
-
-
-
-

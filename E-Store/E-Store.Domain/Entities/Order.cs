@@ -19,7 +19,7 @@ namespace E_Store.Domain.Entities
             CreatingDate = creatingDate;           
             ShippingDetails = shippingDetails;
         }
-        private Order() { }
+        private Order() { Customer = new Customer(); }
         
     }
 }

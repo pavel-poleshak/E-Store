@@ -17,10 +17,22 @@ namespace E_Store.Domain.Entities
         {
             try
             {
-                Order order = new Order(DateTime.Now, shippingDetails);               
-                customer.CreatingDate = DateTime.Now;
-                customer.Orders.Add(order);
-                repository.Customers.Create(customer);
+                Order order = new Order(DateTime.Now, shippingDetails);
+                Customer existCustomer = repository.Customers.Find(c => c.Email == customer.Email).FirstOrDefault();
+                if (existCustomer==null)
+                {
+                    customer.CreatingDate = DateTime.Now;
+                    customer.Orders.Add(order);
+                    repository.Customers.Create(customer);
+                }
+                else
+                {
+                    existCustomer.Orders.Add(order);
+                    repository.Customers.Update(existCustomer);
+                }
+                          
+                
+                
                 foreach (var item in cart.Items)
                 {
                     OrderLine orderLine = new OrderLine(order.OrderId, item.Product.ProductId, item.Quantity);

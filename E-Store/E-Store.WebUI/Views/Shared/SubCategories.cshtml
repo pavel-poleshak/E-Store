@@ -1,0 +1,61 @@
+﻿@using E_Store.WebUI.Models
+@model SubCategoryDTO
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    <h4 class="modal-title" id="myModalLabel">Список подкатегорий</h4>
+    @if (@TempData["messageInSubCategoriesModal"] != null)
+    {
+        <div class="alert alert-info">@TempData["messageInSubCategoriesModal"]</div>
+    }
+    
+</div>
+<div class="modal-body">
+
+    <div class="row">
+        <div class="col-xs-1 bg-info"><h4>Id</h4></div>
+        <div class="col-xs-4 bg-primary"><h4>Имя</h4></div>
+        <div class="col-xs-4 bg-success"><h4>Описание</h4></div>
+        <div class="col-xs-3 bg-danger"><h4>Операции</h4></div>
+    </div>
+    @foreach (var item in Model.SubCategories)
+    {
+        <div class="row">
+            <div class="col-xs-1"><h4>@item.Id</h4></div>
+            <div class="col-xs-4"><h4>@item.Name</h4></div>
+            <div class="col-xs-4"><h4>@item.Description</h4></div>
+            <div class="col-xs-3">
+                @using (Ajax.BeginForm("DeleteSubCategory", new AjaxOptions { LoadingElementId = "loader", LoadingElementDuration=500, UpdateTargetId = "modal-content", AllowCache = false, InsertionMode = InsertionMode.Replace }))
+                {
+                    <input type="hidden" name="subCategoryId" value="@item.Id" />
+                    @Html.Hidden("categoryId", @Model.CategoryId)
+                    <input type="submit" class="btn btn-danger" value="Удалить" />
+                }
+            </div>
+
+        </div>
+    }
+</div>
+<div class="modal-footer">
+    @using (Ajax.BeginForm("CreateSubCategory", null, new AjaxOptions { LoadingElementId = "loader", UpdateTargetId = "modal-content" }, new { @class = "form-inline" }))
+    {
+        @Html.Hidden("categoryId", Model.CategoryId)
+
+        <div class="input-group">
+            <input class="form-control" type="text" name="name" id="name" placeholder="Наименование" required />
+        </div>
+        <div class="input-group">
+            <input class="form-control" type="text" name="description" id="description" placeholder="Описание" />
+        </div>
+
+        <div class="input-group">
+            <input class="form-control btn btn-success" type="submit" value="Добавить" />
+        </div>
+    }
+    <div class="gap"></div>
+    <div class="row">
+        <div class="col-lg-2 col-lg-offset-9">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
+        </div>
+    </div>
+</div>

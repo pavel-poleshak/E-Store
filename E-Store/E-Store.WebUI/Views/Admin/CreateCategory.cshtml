@@ -1,25 +1,21 @@
-﻿@using E_Store.WebUI.HtmlHelpers;
-@using E_Store.WebUI.Models;
-@model E_Store.Domain.Entities.Product
+﻿@model E_Store.Domain.Entities.Category
 
 @{
-    ViewBag.Title = "Добавление товара";
+    ViewBag.Title = "CreateCategory";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
-    List<SubCategoryDTO> listCategories = ViewBag.SubCategories;
 }
-
 
 <div class="panel">
     <div class="panel-heading">
-        <h2>Добавление товара</h2>
+        <h2>Добавление категории</h2>
     </div>
 
-    @using (Html.BeginForm("CreateProduct", "Admin"))
+    @using (Html.BeginForm("CreateCategory", "Admin"))
     {
         <div class="panel-body">
             @foreach (var property in ViewData.ModelMetadata.Properties)
             {
-                if (property.PropertyName != "ProductId" && property.PropertyName != "OrderLines" && property.PropertyName != "SubCategory" && property.PropertyName != "SubCategoryId")
+                if (property.PropertyName != "Id" && property.PropertyName != "SubCategories")
                 {
                     <div class="form-group">
                         <label>@(property.DisplayName ?? property.PropertyName)</label>
@@ -37,19 +33,15 @@
                     </div>
                 }
             }
-            <div class="form-group">
-                <label>Категория</label> <br />
-                @Html.CreateDropdownForProductCategories(listCategories, "SubCategoryId")              
-            </div>
-           
-
         </div>
         <div class="panel-footer">
             <input type="submit" value="Сохранить" class="btn btn-primary" />
-            @Html.ActionLink("Отменить изменения и вернуться к списку", "Index", null, new
+            @Html.ActionLink("Отменить изменения и вернуться к списку", "ViewCategories", null, new
        {
            @class = "btn btn-default"
        })
         </div>
     }
 </div>
+
+

@@ -38,7 +38,7 @@ namespace E_Store.UnitTests
             controller.pageSize = 3;
 
             //act
-            ProductListViewModel result = (ProductListViewModel)controller.List(null,2).Model;
+            ProductListViewModel result = (ProductListViewModel)controller.List(null,null,2).Model;
 
             //assert
 
@@ -88,35 +88,29 @@ namespace E_Store.UnitTests
             controller.pageSize = 3;
 
             //act
-            ProductListViewModel result = (ProductListViewModel)controller.List(null,2).Model;
+            ProductListViewModel result = (ProductListViewModel)controller.List(null,null,2).Model;
             PagingInfo pagingInfo = result.PagingInfo;
 
 
             //assert
-            Assert.AreEqual(pagingInfo.CurrentPage, 2);
-            Assert.AreEqual(pagingInfo.ItemsPerPage, 3);
-            Assert.AreEqual(pagingInfo.TotalItems, 5);
-            Assert.AreEqual(pagingInfo.TotalPages, 2);
-
-
+            Assert.AreEqual( 2, pagingInfo.CurrentPage);
+            Assert.AreEqual( 3, pagingInfo.ItemsPerPage);
+            Assert.AreEqual( 5, pagingInfo.TotalItems);
+            Assert.AreEqual( 2, pagingInfo.TotalPages); 
         }
 
         [TestMethod]
-        public void Can_Create_Categories()
+        public void Can_Add_Ordered_Categories_To_Main_Menu()
         {
             //arrange
             Mock<IUnitOfWork> mock = new Mock<IUnitOfWork>();
-            mock.Setup(m => m.Products.GetAll()).Returns(new List<Product>
+            mock.Setup(m => m.Categories.GetAll()).Returns(new List<Category>
             {
-                new Product() {ProductId=1, Category="Motherboards" },
-                new Product() {ProductId=2, Category="Videocards" },
-                new Product() {ProductId=3, Category="Splitters" },
-                new Product() {ProductId=4, Category=null },
-                new Product() {ProductId=5, Category="Videocards" },
-                new Product() {ProductId=6, Category="" },
-                new Product() {ProductId=7 }
-
-            }.AsQueryable());
+                new Category() {Id=3, Name="Third" },
+                new Category() {Id=1, Name="First" },
+                new Category() {Id=2,Name="Second" }
+                
+            }.AsQueryable());           
 
             NavController controller = new NavController(mock.Object);
 
@@ -127,22 +121,24 @@ namespace E_Store.UnitTests
             //assert
 
             Assert.AreEqual(categories.Count, 3);
-            Assert.AreEqual(categories[0], "Motherboards");
-            Assert.AreEqual(categories[1], "Splitters");
+            Assert.AreEqual(categories[0], "First");
+            Assert.AreEqual(categories[1], "Second");
         }
         [TestMethod]
         public void Can_Get_Selected_Category()
         {
             //arrange
             Mock<IUnitOfWork> mock = new Mock<IUnitOfWork>();
-            mock.Setup(m => m.Products.GetAll()).Returns(new List<Product>
+            mock.Setup(m => m.Categories.GetAll()).Returns(new List<Category>
             {
-                new Product() {ProductId=1, Name="Asus GTX", Category="VGA" },
-                new Product() {ProductId=2, Name="Gigabyte R290", Category="HDMI" }
+                new Category() {Id=3, Name="Third" },
+                new Category() {Id=1, Name="First" },
+                new Category() {Id=2,Name="Second" }
+
             }.AsQueryable());
 
             NavController controller = new NavController(mock.Object);
-            string categoryToSelect = "VGA";
+            string categoryToSelect = "First";
 
             //act
 
@@ -154,34 +150,36 @@ namespace E_Store.UnitTests
 
         }
         [TestMethod]
-        public void Can_Get_Products_By_Category()
+        public void Can_Get_Products_By_Category_And_SubCategory()
         {
             //arrange
-            Mock<IUnitOfWork> mock = new Mock<IUnitOfWork>();
+            Mock<IUnitOfWork> mock = new Mock<IUnitOfWork>(); 
             mock.Setup(m => m.Products.GetAll()).Returns(new List<Product>
             {
-                new Product() {ProductId=1, Category=null },
-                new Product() {ProductId=2,Category="VGA" },
-                new Product() {ProductId=3,Category=null },
-                new Product() {ProductId=4,Category="VGA" },
-                new Product() {ProductId=5,Category="HDMI" },
-                new Product() {ProductId=6,Category="DVI" },
-                new Product() {ProductId=7,Category=null }
+                new Product() {ProductId=1,SubCategory=new SubCategory() {Name="Road", Category=new Category() { Name="Bikes"} } },
+                new Product() {ProductId=2,SubCategory=new SubCategory() {Name="Track", Category=new Category() { Name="Bikes"} } }
+                
             }.AsQueryable());
 
             ProductController controller = new ProductController(mock.Object);
-            controller.pageSize = 10;
+            controller.pageSize = 3;
 
             //act
-            var result = (ProductListViewModel)controller.List("HDMI").Model;
-            int totalItems = result.PagingInfo.TotalItems;
+            var resultCategory = (ProductListViewModel)controller.List("Bikes").Model;
+            var resultCategoryAndSubcategory = (ProductListViewModel)controller.List("Bikes", "Track").Model;
 
-            List<Product> list = result.Products.ToList();
+            int totalItemsByCategory = resultCategory.PagingInfo.TotalItems;
+            int totalItemsBySubCategory = resultCategoryAndSubcategory.PagingInfo.TotalItems;
+
+            List<Product> listByCategory = resultCategory.Products.ToList();
+            List<Product> listByCategoryAndSubCategory = resultCategoryAndSubcategory.Products.ToList();
+
             //assert
 
-            Assert.AreEqual(totalItems, 1);
-            Assert.AreEqual(list[0].Category, "HDMI");
-            //Assert.AreEqual(list[1].Category, "VGA");
+            Assert.AreEqual(totalItemsByCategory, 2);
+            Assert.AreEqual(totalItemsBySubCategory, 1);
+            Assert.AreEqual(listByCategory[0].SubCategory.Name, "Road");
+            Assert.AreEqual(listByCategoryAndSubCategory[0].SubCategory.Name, "Track");
         }
     }
 }

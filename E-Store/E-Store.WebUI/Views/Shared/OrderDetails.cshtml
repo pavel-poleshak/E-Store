@@ -1,24 +1,21 @@
 ﻿@model IEnumerable<E_Store.WebUI.Models.OrdersProductsViewModel>
-<!-- Modal -->
-<div class="modal" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title" id="myModalLabel">Товары в заказе</h4>
             </div>
             <div class="modal-body">
+                <div class="row bg-info">
+                    <div class="col-xs-6 col-lg-6"><h4>Наименование</h4></div>
+                    <div class="col-xs-6 col-lg-6"><h4>Количество</h4></div>
+                </div>
                 @foreach (var item in Model)
                 {
                     <div class="row">
-                        <div class="col-lg-6">@item.Product.Name</div>
-                        <div class="col-lg-6">@item.Quantity</div>
+                        <div class="col-lg-6"><h4>@item.Product.Name</h4></div>
+                        <div class="col-lg-6"><h4>@item.Quantity</h4></div>
                     </div>
                 }
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>                
             </div>
-        </div>
-    </div>
-</div>

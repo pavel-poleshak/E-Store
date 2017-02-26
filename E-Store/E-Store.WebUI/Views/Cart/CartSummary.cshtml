@@ -10,5 +10,5 @@
 <div class="navbar-right navbar-text">
     <b>Ваша корзина:</b>
     @Model.Items.Sum(p=>p.Quantity) позиций,
-    @Model.CalculateTotalPrice().ToString("# BYN")
+    @Model.CalculateTotalPrice().ToString("#.00 BYN")
 </div>
