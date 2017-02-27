@@ -84,6 +84,7 @@
     <Compile Include="Abstract\IOrderProcessor.cs" />
     <Compile Include="Abstract\IRepository.cs" />
     <Compile Include="Abstract\IUnitOfWork.cs" />
+    <Compile Include="Concrete\DbDropCreateAlwaysInitializer.cs" />
     <Compile Include="Concrete\EFCategoryRepository.cs" />
     <Compile Include="Concrete\EFCustomerRepository.cs" />
     <Compile Include="Concrete\EFOrderLineRepository.cs" />
@@ -127,6 +128,10 @@
     <Compile Include="Migrations\201702232029277_A5.Designer.cs">
       <DependentUpon>201702232029277_A5.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201702271838326_A6.cs" />
+    <Compile Include="Migrations\201702271838326_A6.Designer.cs">
+      <DependentUpon>201702271838326_A6.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -152,6 +157,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201702232029277_A5.resx">
       <DependentUpon>201702232029277_A5.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201702271838326_A6.resx">
+      <DependentUpon>201702271838326_A6.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

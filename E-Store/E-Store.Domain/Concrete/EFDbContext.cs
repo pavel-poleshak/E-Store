@@ -10,7 +10,7 @@ namespace E_Store.Domain.Concrete
 {
     public class EFDbContext:DbContext
     {
-        public EFDbContext() : base("EStoreDB") { }
+        public EFDbContext() : base("EStoreDB") { Database.SetInitializer<EFDbContext>(new DbDropCreateAlwaysInitializer()); }
         public DbSet<Customer> Customers { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<SubCategory> SubCategories { get; set; }
@@ -20,7 +20,7 @@ namespace E_Store.Domain.Concrete
 
         public EFDbContext(string connectionString = "EStoreDB") : base(connectionString)
         {
-
+            Database.SetInitializer<EFDbContext>(new DbDropCreateAlwaysInitializer());
         }
 
        

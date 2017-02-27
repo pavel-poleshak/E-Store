@@ -24,7 +24,7 @@ namespace E_Store.WebUI.Controllers
         }
         // GET: Admin
         public ViewResult Index()
-        {        
+        {          
             return View(repository.Products.GetAll().Include(p=>p.SubCategory));
         }
         
@@ -74,6 +74,7 @@ namespace E_Store.WebUI.Controllers
                                                                            select subCategory).ToList()
                                                       }).ToList();
             ViewBag.SubCategories = listSubCategories;
+            
 
             return View(new Product());
         }

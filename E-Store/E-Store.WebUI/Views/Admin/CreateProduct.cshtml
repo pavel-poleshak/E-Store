@@ -14,7 +14,7 @@
         <h2>Добавление товара</h2>
     </div>
 
-    @using (Html.BeginForm("CreateProduct", "Admin"))
+    @using (Html.BeginForm("CreateProduct", "Admin", FormMethod.Post, new { id="newProductForm"}))
     {
         <div class="panel-body">
             @foreach (var property in ViewData.ModelMetadata.Properties)

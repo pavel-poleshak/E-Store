@@ -26,14 +26,13 @@ namespace E_Store.Domain.Entities
         //[DisplayFormat(DataFormatString = "{0:N}", ApplyFormatInEditMode = true)]
         [RegularExpression(@"^\d+\,\d{0,2}$", ErrorMessage ="Неверный формат записи")]
         public decimal Price { get; set; }
-
-        [ForeignKey("SubCategory")]
+        
+        [ForeignKey("SubCategory")]              
         public int? SubCategoryId { get; set; }
-
        
-        [Display(Name ="Категория")]              
+        [Display(Name ="Категория")]        
         public SubCategory SubCategory { get; set; }
 
-        public virtual ICollection<OrderLine> OrderLines { get; set; }
+        public virtual ICollection<OrderLine> OrderLines { get; set; }        
     }
 }
