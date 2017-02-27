@@ -32,8 +32,7 @@ namespace E_Store.WebUI.App_Start
                 "~/Scripts/jquery.validate.number.override.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/custom-scripts").Include(
-               "~/Scripts/Scripts.js"));
-
+               "~/Scripts/Scripts.js"));           
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",

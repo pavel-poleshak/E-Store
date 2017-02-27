@@ -1,10 +1,11 @@
 ﻿@using E_Store.WebUI.Models
-@model MenuItemsViewModel
-
-@Html.ActionLink("Домой", "List", "Product", null,
+@model IEnumerable<SubCategoryDTO>
+<h2>
+    @Html.ActionLink("Домой", "List", "Product", null,
     new { @class = "btn btn-block btn-default btn-lg" })
+</h2>
 
-@foreach (var link in Model.Categories)
+@*@foreach (var link in Model.Categories)
 
     {
      @Html.RouteLink(link, new
@@ -19,4 +20,62 @@
           
       })
    
-}
+}*@
+
+<div class="panel-group" id="accordion">
+    @foreach (var category in Model)
+    {
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#accordion" href="#collapse@(category.CategoryId)">
+                        <span class="glyphicon glyphicon-folder-close">
+                        </span>@category.CategoryName
+                    </a>
+                </h4>
+            </div>
+            <div id="collapse@(category.CategoryId)" class="panel-collapse collapse">
+                <div class="panel-body">
+                    <table class="table">
+                        <tr>
+                            <td>
+                                @Html.RouteLink("Отобразить все", new
+                               {
+                                   controller = "Product",
+                                   action = "List",
+                                   category = category.CategoryName,
+                                   subCategory = string.Empty,
+                                   page = 1
+                               }, new
+                               {
+                                   @class = "btn btn-block btn-info btn-sm"
+                               })
+                            </td>
+                        </tr>
+                        @foreach (var subCategory in category.SubCategories)
+                        {
+
+                            <tr>
+                                <td>                                    
+                                    @Html.RouteLink(subCategory.Name, new
+                               {
+                                   controller = "Product",
+                                   action = "List",
+                                   category = category.CategoryName,
+                                   subCategory = subCategory.Name,
+                                   page = 1
+                               }, new
+                               {
+                                   @class = "btn btn-block btn-default btn-sm"
+                               })
+                                </td>
+                            </tr>
+                        }                       
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    }
+
+</div>

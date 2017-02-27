@@ -76,6 +76,7 @@ namespace E_Store.WebUI.Controllers
                 return View();
             }
             TempData["message"] = "Заказ успешно оформлен";
+            cart.Clear();
             return RedirectToAction("List", "Product");
         }
 

@@ -98,57 +98,7 @@ namespace E_Store.UnitTests
             Assert.AreEqual( 5, pagingInfo.TotalItems);
             Assert.AreEqual( 2, pagingInfo.TotalPages); 
         }
-
-        [TestMethod]
-        public void Can_Add_Ordered_Categories_To_Main_Menu()
-        {
-            //arrange
-            Mock<IUnitOfWork> mock = new Mock<IUnitOfWork>();
-            mock.Setup(m => m.Categories.GetAll()).Returns(new List<Category>
-            {
-                new Category() {Id=3, Name="Third" },
-                new Category() {Id=1, Name="First" },
-                new Category() {Id=2,Name="Second" }
-                
-            }.AsQueryable());           
-
-            NavController controller = new NavController(mock.Object);
-
-            //act          
-            var model = (MenuItemsViewModel)controller.Menu().Model;
-            List<string> categories = model.Categories.ToList();
-
-            //assert
-
-            Assert.AreEqual(categories.Count, 3);
-            Assert.AreEqual(categories[0], "First");
-            Assert.AreEqual(categories[1], "Second");
-        }
-        [TestMethod]
-        public void Can_Get_Selected_Category()
-        {
-            //arrange
-            Mock<IUnitOfWork> mock = new Mock<IUnitOfWork>();
-            mock.Setup(m => m.Categories.GetAll()).Returns(new List<Category>
-            {
-                new Category() {Id=3, Name="Third" },
-                new Category() {Id=1, Name="First" },
-                new Category() {Id=2,Name="Second" }
-
-            }.AsQueryable());
-
-            NavController controller = new NavController(mock.Object);
-            string categoryToSelect = "First";
-
-            //act
-
-            var model = (MenuItemsViewModel)controller.Menu(categoryToSelect).Model;
-            string selectedCategory = model.SelectedCategory;         
-          
-            //assert
-            Assert.AreEqual(selectedCategory, categoryToSelect);
-
-        }
+       
         [TestMethod]
         public void Can_Get_Products_By_Category_And_SubCategory()
         {
